@@ -41,7 +41,8 @@ public class WlCitacPostajeBean {
     @EJB
     private FtpKlijent ftp;
 
-    public void procitajPostaju(IzvorPodataka izvor, Postaja p, Date zadnji, Map<ProgramMjerenja, NizPodataka> nizovi) throws FtpKlijentException, IOException, URISyntaxException {
+    public void procitajPostaju(IzvorPodataka izvor, Postaja p, Date zadnji, 
+            Map<ProgramMjerenja, NizPodataka> nizovi) throws FtpKlijentException, IOException, URISyntaxException {
         URI izvorUri = new URI(izvor.getUri());
         ftp.setUri(izvorUri);
         ftp.connect();
@@ -57,6 +58,7 @@ public class WlCitacPostajeBean {
                 log.log(Level.INFO, "Datoteka :{0}", file.getName());
                 try (InputStream ifs = ftp.getFileStream(file)) {
                     citac.parse(ifs);
+// obradi
                 } catch (Exception ex) {
                     log.log(Level.SEVERE, null, ex);
                 } finally {
