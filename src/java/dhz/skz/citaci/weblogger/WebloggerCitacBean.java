@@ -7,8 +7,6 @@ package dhz.skz.citaci.weblogger;
 
 import dhz.skz.aqdb.facades.PodatakFacade;
 import dhz.skz.citaci.CitacIzvora;
-import dhz.skz.citaci.FtpKlijent;
-import dhz.skz.citaci.LikzDB;
 import dhz.skz.citaci.weblogger.validatori.Validator;
 import dhz.skz.citaci.weblogger.validatori.ValidatorFactory;
 import dhz.skz.likz.aqdb.entity.IzvorPodataka;
@@ -34,6 +32,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.apache.commons.net.ftp.FTPFile;
 import wlcitac.NizPodataka;
 import wlcitac.SatniAgregator;
@@ -52,28 +51,25 @@ import wlcitac.exceptions.IzvorPodatakaException;
 public class WebloggerCitacBean implements CitacIzvora {
 
     private static final Logger log = Logger.getLogger(WebloggerCitacBean.class.getName());
-    private final TimeZone timeZone = TimeZone.getTimeZone("UTC");
-    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm z");
 
     private Map<ProgramMjerenja, NizPodataka> nizoviPodataka;
     private Map<Postaja, Map<ProgramMjerenja, NizPodataka>> nizoviPoPostajama;
     private Map<Postaja, Podatak> zadnjiPodatakPoPostaji;
 
     @EJB
-    private FtpKlijent ftp;
+    private WlCitacPostajeBean citacPostaje;
 
     @EJB
     private PodatakFacade podatakDAO;
 
-    @Inject
-    @LikzDB
+    @PersistenceContext(unitName = "CitacModulPU")
     private EntityManager em;
 
     @EJB
     private ValidatorFactory validatorFac;
 
     public WebloggerCitacBean() {
-        sdf.setTimeZone(timeZone);
+        
     }
 
     @Override
@@ -87,42 +83,20 @@ public class WebloggerCitacBean implements CitacIzvora {
         try {
             init(izvor);
             for (Postaja p : nizoviPoPostajama.keySet()) {
-                ftp.connect();
                 Date zadnji = getZadnjeVrijemeNaPostaji(p);
-                Map<ProgramMjerenja, NizPodataka> nizovi = nizoviPoPostajama.get(p);
-
-                WlDatotekaParser citac = new WlDatotekaParser(timeZone);
-                citac.setZadnjiPodatak(zadnji);
-                citac.setNizKanala(nizovi);
-
-                WlFileFilter fns = new WlFileFilter(p.getNazivPostaje(), zadnji, timeZone);
-
-                for (FTPFile file : ftp.getFileList(fns)) {
-                    log.log(Level.INFO, "Datoteka :{0}", file.getName());
-                    try (InputStream ifs = ftp.getFileStream(file)) {
-                        citac.parse(ifs);
-                    } catch (Exception ex) {
-                        log.log(Level.SEVERE, null, ex);
-                    } finally {
-                        ftp.zavrsi();
-                    }
-                }
+                citacPostaje.procitajPostaju(izvor, p, zadnji, nizoviPoPostajama.get(p));
             }
             obradiNizove();
         } catch (IzvorPodatakaException | URISyntaxException | AgregatorException ex) {
             log.log(Level.SEVERE, null, ex);
         } catch (IOException | FtpKlijentException | NamingException ex) {
             log.log(Level.SEVERE, null, ex);
-        } finally {
-            ftp.disconnect();
         }
         return null;
     }
 
     private void init(IzvorPodataka izvor) throws IzvorPodatakaException, URISyntaxException, NamingException {
         log.log(Level.INFO, "init poceo");
-        URI izvorUri = new URI(izvor.getUri());
-        ftp.setUri(izvorUri);
         em.refresh(izvor);
 
         nizoviPoPostajama = new HashMap<>();
@@ -179,4 +153,6 @@ public class WebloggerCitacBean implements CitacIzvora {
         }
         return zadnji;
     }
+
+
 }

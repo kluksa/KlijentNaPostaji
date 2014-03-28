@@ -32,12 +32,12 @@ public class CitacTimerBean  {
     @Schedule(minute = "*", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "9-17", dayOfWeek = "Mon-Fri")
     public void myTimer() {
 
-        try {
-            InitialContext ctx = new InitialContext();
-            CitacIzvora kb = (CitacIzvora) ctx.lookup("java:module/WebloggerCitacBean");
-        } catch (NamingException ex) {
-            log.log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            InitialContext ctx = new InitialContext();
+//            CitacIzvora kb = (CitacIzvora) ctx.lookup("java:module/WebloggerCitacBean");
+//        } catch (NamingException ex) {
+//            log.log(Level.SEVERE, null, ex);
+//        }
     }
 
     public void pokreniCitace() {

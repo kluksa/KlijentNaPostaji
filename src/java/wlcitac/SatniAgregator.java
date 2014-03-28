@@ -118,7 +118,7 @@ public class SatniAgregator  {
                                                 .subMap(po, false, kr, true);
             if (!podmapa.isEmpty()) {
                 PodatakWl ps = agregiraj_podmapu(kr, podmapa);
-                ps.setProgramMjerenjaId(minutniNiz.getKljuc());
+                ps.setProgramMjerenja(minutniNiz.getKljuc());
                 agregiraniNiz.dodajPodatak(kr, ps);
             }
         }
@@ -136,11 +136,12 @@ public class SatniAgregator  {
         
         PodatakWl agregirani = new PodatakWl();
         agregirani.setVrijeme(vrijeme);
-        agregirani.setStatus(0);
+        Status s = new Status();
+        agregirani.setStatus(new Status());
         for (Date t : podmapa.keySet()){
             PodatakWl trenutniPodatak = podmapa.get(t);
             Float iznos = trenutniPodatak.getVrijednost();
-            agregirani.dodajStatus(trenutniPodatak.getStatus());
+            s.dodajStatus(trenutniPodatak.getStatus());
 
             if (trenutniPodatak.isValid()) {
                 kum_sum += iznos;
@@ -151,11 +152,11 @@ public class SatniAgregator  {
 
         int obuhvat = count * minutniNiz.getCestinaUzorkovanjaSekunda() / 36;
         if ( obuhvat < MIN_OBUHVAT) {
-            agregirani.dodajStatus(Flag.OBUHVAT);
+            s.dodajFlag(Flag.OBUHVAT);
         }
 
         agregirani.setObuhvat((short)obuhvat);
-        
+        agregirani.setStatus(s);
         if (count > 0) {
             float iznos = kum_sum / count;
             agregirani.setVrijednost(iznos);
