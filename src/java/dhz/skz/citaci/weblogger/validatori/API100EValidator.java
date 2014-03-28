@@ -1,0 +1,59 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dhz.skz.citaci.weblogger.validatori;
+
+import java.io.Serializable;
+import wlcitac.util.Flag;
+import wlcitac.exceptions.NevaljanStatusException;
+import wlcitac.util.Status;
+
+/**
+ *
+ * @author kraljevic
+ */
+public class API100EValidator implements Validator, Serializable {
+
+    private Float tempMin = 15.f;
+    private Float tempMax = 25.f;
+    private Float ldl = 0.f;
+    private Float opseg = 1000.f;
+
+    @Override
+    public Status getStatus(Float iznos, String statusStr, float temperatura) throws NevaljanStatusException {
+        Status s = new Status();
+        if (temperatura != -999.f && (temperatura < tempMin || temperatura > tempMax)) {
+            s.dodajFlag(Flag.TEMPERATURA);
+        }
+        if (iznos < ldl) {
+            s.dodajFlag(Flag.LDL);
+        }
+        if (iznos > opseg) {
+            s.dodajFlag(Flag.VAN_PODRUCJA);
+        }
+        if (iznos == -999.f) {
+            s.dodajFlag(Flag.NEDOSTAJE);
+        } else if (!statusStr.isEmpty()) {
+            try {
+                int stInt = Integer.parseInt(statusStr);
+                if (stInt > 255) {
+                    s.dodajFlag(Flag.ERR);
+                }
+                if ((stInt & 1) == 1) {
+                    s.dodajFlag(Flag.MAN);
+                }
+                if ((stInt & 2) == 2) {
+                    s.dodajFlag(Flag.ZS);
+                }
+                if ((stInt & 4) == 4) {
+                    s.dodajFlag(Flag.ZS);
+                }
+            } catch (NumberFormatException ex) {
+                throw new NevaljanStatusException(ex);
+            }
+        }
+        return s;
+    }
+}
