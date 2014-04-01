@@ -6,7 +6,6 @@
 
 package wlcitac.util;
 
-import dhz.skz.likz.aqdb.entity.Podatak;
 import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
 import java.util.Date;
 

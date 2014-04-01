@@ -81,7 +81,6 @@ public class WlDatotekaParser {
                 log.log(Level.SEVERE, "izvor_program_kljucevi_map ne sadrzi program_mjerenja_id = {0}", kljuc.getId());
             }
         }
-
     }
 
     public void parse(InputStream fileStream) throws WlFileException, IOException {
@@ -181,7 +180,7 @@ public class WlDatotekaParser {
                     PodatakWl pod = new PodatakWl();
                     pod.setVrijeme(trenutnoVrijeme);
                     pod.setStatus(status);
-
+                    pod.setVrijednost(iznos);
                     nizPodataka.dodajPodatak(trenutnoVrijeme, pod);
 
                 } catch (NumberFormatException | NevaljanStatusException ex) {

@@ -5,7 +5,8 @@
  */
 package dhz.skz.citaci.weblogger.validatori;
 
-import java.io.Serializable;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import wlcitac.util.Flag;
 import wlcitac.exceptions.NevaljanStatusException;
 import wlcitac.util.Status;
@@ -14,12 +15,13 @@ import wlcitac.util.Status;
  *
  * @author kraljevic
  */
-public class API100EValidator implements Validator, Serializable {
+@Stateless
+public class API100EValidator implements Validator {
 
-    private Float tempMin = 15.f;
-    private Float tempMax = 25.f;
-    private Float ldl = 0.f;
-    private Float opseg = 1000.f;
+    private final Float tempMin = 15.f;
+    private final Float tempMax = 25.f;
+    private final Float ldl = 0.f;
+    private final Float opseg = 1000.f;
 
     @Override
     public Status getStatus(Float iznos, String statusStr, float temperatura) throws NevaljanStatusException {
@@ -37,7 +39,7 @@ public class API100EValidator implements Validator, Serializable {
             s.dodajFlag(Flag.NEDOSTAJE);
         } else if (!statusStr.isEmpty()) {
             try {
-                int stInt = Integer.parseInt(statusStr);
+                int stInt = Integer.parseInt(statusStr,16);
                 if (stInt > 255) {
                     s.dodajFlag(Flag.ERR);
                 }

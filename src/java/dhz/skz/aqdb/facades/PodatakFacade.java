@@ -10,7 +10,11 @@ import dhz.skz.likz.aqdb.entity.IzvorPodataka_;
 import dhz.skz.likz.aqdb.entity.NivoValidacije;
 import dhz.skz.likz.aqdb.entity.Podatak;
 import dhz.skz.likz.aqdb.entity.Podatak_;
+import dhz.skz.likz.aqdb.entity.Postaja;
+import dhz.skz.likz.aqdb.entity.Postaja_;
 import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.likz.aqdb.entity.ProgramMjerenja_;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +23,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Tuple;
+import javax.persistence.criteria.CollectionJoin;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
+import wlcitac.NizPodataka;
+import wlcitac.util.PodatakWl;
 
 /**
  *
@@ -74,4 +82,77 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
         }
         return pm;
     }
+    
+    
+    
+    public Date getVrijemeZadnjegNaPostajiZaIzvor(Postaja p, IzvorPodataka i) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Date> cq = cb.createQuery(Date.class);
+        Root<Podatak> from = cq.from(Podatak.class);
+        Join<Podatak, ProgramMjerenja> podatakProgram = from.join(Podatak_.programMjerenjaId);
+
+        Expression<NivoValidacije> nivoValidacijeE = from.get(Podatak_.nivoValidacijeId);
+        Expression<Postaja> postaja = podatakProgram.get(ProgramMjerenja_.postajaId);
+        Expression<IzvorPodataka> izvor = podatakProgram.get(ProgramMjerenja_.izvorPodatakaId);
+        Expression<Date> vrijeme = from.get(Podatak_.vrijeme);
+                
+        cq.where(
+                cb.and(
+                        cb.equal(nivoValidacijeE, new NivoValidacije((short) 0)),
+                        cb.equal(postaja, p),
+                        cb.equal(izvor, i)
+                )
+        );
+        cq.select(cb.greatest(vrijeme));
+        return em.createQuery(cq).getSingleResult();
+    }
+    
+    public Collection<ProgramMjerenja> getProgramNaPostajiZaIzvor(Postaja p, IzvorPodataka i, Date zadnji) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<ProgramMjerenja> cq = cb.createQuery(ProgramMjerenja.class);
+        Root<ProgramMjerenja> program = cq.from(ProgramMjerenja.class);
+        Expression<Postaja> postaja = program.get(ProgramMjerenja_.postajaId);
+        Expression<IzvorPodataka> izvor = program.get(ProgramMjerenja_.izvorPodatakaId);
+        Expression<Date> kraj = program.get(ProgramMjerenja_.zavrsetakMjerenja);
+        
+        cq.select(program).where(
+            cb.and(
+                cb.equal(postaja, p),
+                cb.equal(izvor, i),
+                cb.or(
+                    cb.isNull(kraj),
+                    cb.greaterThan(kraj, zadnji)
+                )
+            )
+        );
+        return em.createQuery(cq).getResultList();
+    }
+    
+    public Collection<Postaja> getPostajeZaIzvor(IzvorPodataka i) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Postaja> cq = cb.createQuery(Postaja.class);
+        Root<IzvorPodataka> izvor = cq.from(IzvorPodataka.class);
+        CollectionJoin<IzvorPodataka, ProgramMjerenja> izvorProgram = izvor.join(IzvorPodataka_.programMjerenjaCollection);
+        Join<ProgramMjerenja, Postaja> programPostaja = izvorProgram.join(ProgramMjerenja_.postajaId);
+        Expression<Postaja> postaja = izvorProgram.get(ProgramMjerenja_.postajaId);
+        Expression<String> naziv = programPostaja.get(Postaja_.nazivPostaje);
+        cq.where(cb.equal(izvor, i)).select(postaja).distinct(true).orderBy(cb.asc(naziv));
+        return em.createQuery(cq).getResultList();
+    }
+    
+    public void pospremiNiz(NizPodataka niz) {
+        ProgramMjerenja kljuc = niz.getKljuc();
+        
+        for (Date d : niz.getPodaci().keySet()){
+            PodatakWl wlp = niz.getPodaci().get(d);
+            Podatak p = new Podatak();
+            p.setVrijeme(d);
+            p.setProgramMjerenjaId(kljuc);
+            p.setVrijednost(wlp.getVrijednost());
+            p.setStatus(wlp.getStatus().getStatus());
+            p.setObuhvat(wlp.getObuhvat());
+            create(p);
+        }
+    }
+
 }

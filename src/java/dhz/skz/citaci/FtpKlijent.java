@@ -4,7 +4,6 @@
  */
 package dhz.skz.citaci;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -34,7 +33,7 @@ public class FtpKlijent {
     private FTPClient ftp;
     private InputStream istream;
 
-    public void setUri(URI uri) {
+    private void setUri(URI uri) {
         host = uri.getHost();
         String userpass = uri.getUserInfo();
         int i = userpass.indexOf(":");
@@ -42,31 +41,46 @@ public class FtpKlijent {
         passwd = userpass.substring(i + 1);
     }
 
-    public FTPFile[] getFileList(FTPFileFilter filter) throws FtpKlijentException, IOException {
-        if (!spojen) {
-            throw new FtpKlijentException("FTP not connected");
+    public FTPFile[] getFileList(FTPFileFilter filter) throws FtpKlijentException  {
+        try {
+            return ftp.listFiles(null, filter);
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, "Could not get File list", ex);
+            throw new FtpKlijentException("Could not get File list.", ex); 
         }
-        return ftp.listFiles(null, filter);
     }
 
-    public InputStream getFileStream(FTPFile file) throws FtpKlijentException, IOException {
-//        if (!spojen) {
-//            throw new FtpKlijentException("FTP not connected");
-//        }
+    public InputStream getFileStream(FTPFile file) throws FtpKlijentException {
         String filename = file.getName();
-        istream = ftp.retrieveFileStream(filename);
+        try {
+            istream = ftp.retrieveFileStream(filename);
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, "Could not get file stream", ex);
+            throw new FtpKlijentException("Could not get file stream.", ex); 
+        }
         return istream;
-//        return new BufferedInputStream(new FileInputStream ("/home/kraljevic/plitvicka jezera-20130103.csv"));
     }
 
-    public boolean zavrsi() throws IOException {
-        return ftp.completePendingCommand();
+    public boolean zavrsi() throws FtpKlijentException {
+        try {
+            return ftp.completePendingCommand();
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, "Could not complete.", ex);
+            throw new FtpKlijentException("Could not complete.", ex); 
+        }
     }
 
-    public void zatvoriStream() throws IOException {
-        istream.close();
+    public void zatvoriStream() throws FtpKlijentException {
+        try {
+            istream.close();
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, "Could not close stream.", ex);
+            throw new FtpKlijentException("Could not close stream.", ex); 
+        }
     }
-    public void connect() throws FtpKlijentException {
+    
+    public void connect(URI uri) throws FtpKlijentException {
+        this.setUri(uri);
         ftp = new FTPClient();
         try {
             ftp.connect(host);
@@ -80,8 +94,6 @@ public class FtpKlijent {
             }
             ftp.enterLocalPassiveMode();
 //                   ftp.setFileType(FTP.BINARY_FILE_TYPE);
-            spojen = true;
-
         } catch (IOException e) {
             disconnect();
             throw new FtpKlijentException("Could not connect to server.", e);
@@ -89,7 +101,6 @@ public class FtpKlijent {
     }
 
     public void disconnect() {
-        spojen = false;
         if (ftp.isConnected()) {
             try {
                 ftp.disconnect();

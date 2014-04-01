@@ -65,10 +65,7 @@ public class SatniAgregator  {
         minutniNiz = niz;
     }
 
-    public NizPodataka getAgregiraniNiz() throws AgregatorException {
-        if (agregiraniNiz == null) {
-            throw (new AgregatorException());
-        }
+    public NizPodataka getAgregiraniNiz() {
         return agregiraniNiz;
     }
 
@@ -137,7 +134,6 @@ public class SatniAgregator  {
         PodatakWl agregirani = new PodatakWl();
         agregirani.setVrijeme(vrijeme);
         Status s = new Status();
-        agregirani.setStatus(new Status());
         for (Date t : podmapa.keySet()){
             PodatakWl trenutniPodatak = podmapa.get(t);
             Float iznos = trenutniPodatak.getVrijednost();

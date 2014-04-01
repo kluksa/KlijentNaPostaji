@@ -39,7 +39,8 @@ public final class WlFileFilter implements FTPFileFilter {
     }
 
     public void setNazivPostaje(String nazivPostaje) {
-        this.nazivPostaje = nazivPostaje.toLowerCase();
+        this.nazivPostaje = Pattern.quote(nazivPostaje.toLowerCase());
+       
     }
 
     public void setTimeZone(TimeZone timeZone) {
