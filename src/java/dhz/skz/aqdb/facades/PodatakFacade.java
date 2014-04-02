@@ -145,13 +145,7 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
         
         for (Date d : niz.getPodaci().keySet()){
             PodatakWl wlp = niz.getPodaci().get(d);
-            Podatak p = new Podatak();
-            p.setVrijeme(d);
-            p.setProgramMjerenjaId(kljuc);
-            p.setVrijednost(wlp.getVrijednost());
-            p.setStatus(wlp.getStatus().getStatus());
-            p.setObuhvat(wlp.getObuhvat());
-            create(p);
+            create(wlp);
         }
     }
 

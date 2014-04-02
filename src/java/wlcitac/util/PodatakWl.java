@@ -6,69 +6,31 @@
 
 package wlcitac.util;
 
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
-import java.util.Date;
+import dhz.skz.likz.aqdb.entity.Podatak;
 
 
 /**
  *
  * @author kraljevic
  */
-public class PodatakWl {
-    private Date vrijeme;
-    private ProgramMjerenja programMjerenja;
-    private Status status;
-    private Float vrijednost;
-    private short obuhvat;
+public class PodatakWl extends Podatak {
     
-    
+    public PodatakWl(){
+        setStatus(0);
+    }
     public void dodajStatus(Flag s){
-        status.dodajFlag(s);
-    }
-        
-    public boolean isValid() {
-        return status.isValid();
-    }
-
-    public void setVrijeme(Date vrijeme) {
-        this.vrijeme = vrijeme;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public void setProgramMjerenja(ProgramMjerenja kljuc) {
-        this.programMjerenja = kljuc;
-    }
-
-    public Status getStatus() {
-        return this.status;
-    }
-
-    public void setObuhvat(short obuhvat) {
-        this.obuhvat = obuhvat;
-    }
-
-    public void setVrijednost(float iznos) {
-        this.vrijednost = iznos;
-    }
-
-    public ProgramMjerenja getProgramMjerenja() {
-        return programMjerenja;
-    }
-
-    public Float getVrijednost() {
-        return vrijednost;
-    }
-
-    public short getObuhvat() {
-        return obuhvat;
+        setStatus(getStatus() | (1 << s.ordinal()));
     }
     
-
-    public Date getVrijeme() {
-        return this.vrijeme;
+    public void dodajStatus(Status s) {
+        setStatus(getStatus() | s.getStatus());
     }
-
+    
+    public void dodajStatus(int i) {
+        setStatus(getStatus() | i);
+    }
+    
+    public boolean isValid() {
+        return getStatus() < Flag.NEVALJAN;
+    }
 }

@@ -179,7 +179,7 @@ public class WlDatotekaParser {
 
                     PodatakWl pod = new PodatakWl();
                     pod.setVrijeme(trenutnoVrijeme);
-                    pod.setStatus(status);
+                    pod.setStatus(status.getStatus());
                     pod.setVrijednost(iznos);
                     nizPodataka.dodajPodatak(trenutnoVrijeme, pod);
 
