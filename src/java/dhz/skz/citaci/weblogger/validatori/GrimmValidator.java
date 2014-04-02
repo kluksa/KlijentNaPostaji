@@ -5,7 +5,6 @@
  */
 package dhz.skz.citaci.weblogger.validatori;
 
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import wlcitac.util.Flag;
 import wlcitac.exceptions.NevaljanStatusException;
@@ -16,7 +15,7 @@ import wlcitac.util.Status;
  * @author kraljevic
  */
 @Stateless
-public class API100EValidator extends ValidatorImpl {
+public class GrimmValidator extends ValidatorImpl {
 
     private final Float ldl = 0.f;
     private final Float opseg = 1000.f;

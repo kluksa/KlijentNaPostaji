@@ -9,8 +9,6 @@ import dhz.skz.likz.aqdb.entity.ModelUredjaja;
 import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
 import dhz.skz.likz.aqdb.entity.ProgramUredjajLink;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -44,6 +42,7 @@ public class ValidatorFactory {
     public Validator lookupValidator(ModelUredjaja model) throws NamingException {
         String str = "java:module/" + model.getValidatorId().getNaziv().trim();
         Validator v = (Validator) new InitialContext().lookup(str);
+        v.setBrojMjerenjaUSatu(model.getBrojMjerenjaUSatu());
         return v;
     }
 }

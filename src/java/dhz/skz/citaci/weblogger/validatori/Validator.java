@@ -14,6 +14,11 @@ import wlcitac.util.Status;
  * @author kraljevic
  */
 public interface Validator {
-    Status getStatus(Float iznos, String statusStr, float temperatura) 
-            throws NevaljanStatusException;
+
+    Integer getBrojMjerenjaUSatu();
+    
+    void setBrojMjerenjaUSatu(Integer n);
+
+    Status getStatus(Float iznos, String statusStr, float temperatura) throws NevaljanStatusException;
+    
 }

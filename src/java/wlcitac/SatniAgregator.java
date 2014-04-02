@@ -5,6 +5,7 @@
 package wlcitac;
 
 //import dhz.utils.LokalnaZona;
+import dhz.skz.citaci.weblogger.validatori.Validator;
 import wlcitac.exceptions.AgregatorException;
 import java.util.*;
 import java.util.logging.Level;
@@ -131,6 +132,8 @@ public class SatniAgregator  {
             return null;
         }
         
+        Validator v = minutniNiz.getValidatori().floorEntry(vrijeme).getValue();
+        
         PodatakWl agregirani = new PodatakWl();
         agregirani.setVrijeme(vrijeme);
         for (Date t : podmapa.keySet()){
@@ -145,7 +148,7 @@ public class SatniAgregator  {
             log.log(Level.FINEST, "podmapa:: {0}:{1}:{2}:{3}:{4}", new Object[]{this.komponenta, t, iznos, kum_sum, count});
         }
 
-        int obuhvat = count * minutniNiz.getCestinaUzorkovanjaSekunda() / 36;
+        int obuhvat = 100 * count / v.getBrojMjerenjaUSatu();
         if ( obuhvat < MIN_OBUHVAT) {
             agregirani.dodajStatus(Flag.OBUHVAT);
         }

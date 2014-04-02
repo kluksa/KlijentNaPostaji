@@ -23,18 +23,18 @@ public class NizPodataka {
 
     private ProgramMjerenja kljuc;
     private NavigableMap<Date, Validator> validatori;
-    private int cestinaUzorkovanjaSekunda;
+    private int brojMjerenjaUSatu;
     private final NavigableMap<Date, PodatakWl> podaci;
 
     public NizPodataka(ProgramMjerenja kljuc) {
         this.kljuc = kljuc;
         this.podaci = new TreeMap<>();
-        this.cestinaUzorkovanjaSekunda = 60;
+        this.brojMjerenjaUSatu = 60;
     }
     
     public NizPodataka(){
         this.podaci = new TreeMap<>();
-        this.cestinaUzorkovanjaSekunda = 60;
+        this.brojMjerenjaUSatu = 60;
     }
 
     public NavigableMap<Date, Validator> getValidatori() {
@@ -53,12 +53,12 @@ public class NizPodataka {
         return podaci;
     }
 
-    public int getCestinaUzorkovanjaSekunda() {
-        return cestinaUzorkovanjaSekunda;
+    public int getBrojMjerenjaUSatu() {
+        return brojMjerenjaUSatu;
     }
 
-    public void setCestinaUzorkovanjaSekunda(int cestinaUzorkovanjaSekunda) {
-        this.cestinaUzorkovanjaSekunda = cestinaUzorkovanjaSekunda;
+    public void setBrojMjerenjaUSatu(int brojMjerenjaUSatu) {
+        this.brojMjerenjaUSatu = brojMjerenjaUSatu;
     }
 
     public ProgramMjerenja getKljuc() {

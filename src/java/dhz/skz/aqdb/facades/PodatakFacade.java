@@ -143,6 +143,7 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
     
     public void pospremiNiz(NizPodataka niz) {
         ProgramMjerenja kljuc = niz.getKljuc();
+        if ( niz.getPodaci().isEmpty()) return;
         
         log.log(Level.INFO, "Postaja {0}, komponenta {1}, prvi {2}, zadnj {3}, ukupno {4}",
                 new Object[]{kljuc.getPostajaId().getNazivPostaje(),
@@ -155,11 +156,13 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
             PodatakWl wlp = niz.getPodaci().get(d);
             Podatak p = new Podatak();
             p.setVrijeme(d);
+            p.setVrijednost(wlp.getVrijednost());
+            p.setObuhvat(wlp.getObuhvat());
             p.setProgramMjerenjaId(kljuc);
             p.setNivoValidacijeId(nv);
             p.setStatus(wlp.getStatus());
             em.persist(p);
-            em.flush();
         }
+        em.flush();
     }
 }
