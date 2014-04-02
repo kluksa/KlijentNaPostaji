@@ -140,8 +140,7 @@ public class WebloggerCitacBean implements CitacIzvora {
                     a.agregiraj();
                     NizPodataka agr = a.getAgregiraniNiz();
                     log.log(Level.INFO, "Pospremam Postaja {0}, komponenta {1}", new Object[]{p.getPostajaId().getNazivPostaje(), p.getKomponentaId().getFormula()});
-//                    dao.pospremiNiz(agr);
-//                    izlazniNiz.put(p, agr);
+                    dao.pospremiNiz(agr);
                     niz.getPodaci().clear();
                     niz.getValidatori().clear();
                 } catch (Exception ex) {
@@ -150,7 +149,6 @@ public class WebloggerCitacBean implements CitacIzvora {
                 }
             }
         }
-//        return izlazniNiz;
     }
 
     private Date getZadnjiPodatak(IzvorPodataka izvor, Postaja p) {
@@ -158,66 +156,7 @@ public class WebloggerCitacBean implements CitacIzvora {
         if ( zadnji == null ) {
             zadnji = new Date(0L);
         }
+        log.log(Level.INFO,"Zadnji podatak na {0} u {1}",new Object[]{p.getNazivLokacije(),zadnji});
         return zadnji;
     }
-    
-    //    private void init(IzvorPodataka izvor) throws IzvorPodatakaException, URISyntaxException, NamingException {
-//        log.log(Level.INFO, "init poceo");
-//        em.refresh(izvor);
-//
-//        nizoviPoPostajama = new HashMap<>();
-//        nizoviPodataka = new HashMap<>();
-//        for (ProgramMjerenja pm : izvor.getProgramMjerenjaCollection()) {
-//            ProgramMjerenja kljuc = pm;
-//
-//            if (!nizoviPoPostajama.containsKey(pm.getPostajaId())) {
-//                nizoviPoPostajama.put(pm.getPostajaId(), new HashMap<ProgramMjerenja, NizPodataka>());
-//            }
-//            Map<ProgramMjerenja, NizPodataka> set = nizoviPoPostajama.get(pm.getPostajaId());
-//            NizPodataka np = new NizPodataka(kljuc);
-////            NavigableMap<Date, Validator> val = validatorFac.getValidatori(pm);
-////            np.setValidatori(val);
-////            nizoviPodataka.put(pm, np);
-//            set.put(kljuc, np);
-//        }
-////        this.initZadnjiPodatak();
-//        log.log(Level.INFO, "init zavrsio");
-//
-//    }
-//
-//    private void obradiNizove() throws AgregatorException {
-//        for (ProgramMjerenja p : nizoviPodataka.keySet()) {
-//            NizPodataka niz = nizoviPodataka.get(p);
-//            if (!niz.getPodaci().isEmpty()) {
-//                SatniAgregator a = new SatniAgregator();
-//                a.setNeagregiraniNiz(niz);
-//                a.agregiraj();
-//                NizPodataka agr = a.getAgregiraniNiz();
-//                nizoviPodataka.put(p, agr);
-//            }
-//        }
-//    }
-//
-//    public void initZadnjiPodatak() {
-//        zadnjiPodatakPoPostaji = new HashMap<>();
-//        for (Entry<ProgramMjerenja, Podatak> e : podatakDAO.getZadnjiPodatakPoProgramu().entrySet()) {
-//            Postaja p = e.getKey().getPostajaId();
-//            Podatak pod = e.getValue();
-//            if (zadnjiPodatakPoPostaji.containsKey(p)) {
-//                if (pod.getVrijeme().after(zadnjiPodatakPoPostaji.get(p).getVrijeme())) {
-//                    zadnjiPodatakPoPostaji.put(p, pod);
-//                }
-//            }
-//        }
-//    }
-//
-//    private Date getZadnjeVrijemeNaPostaji(Postaja p) {
-//        Podatak pod = zadnjiPodatakPoPostaji.get(p);
-//        Date zadnji = new Date(0L);
-//        if (pod != null) {
-//            zadnji = zadnjiPodatakPoPostaji.get(p).getVrijeme();
-//        }
-//        return zadnji;
-//    }
-
 }

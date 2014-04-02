@@ -7,12 +7,19 @@ package dhz.skz.citaci;
 
 import dhz.skz.aqdb.facades.PodatakFacade;
 import dhz.skz.likz.aqdb.entity.IzvorPodataka;
+import dhz.skz.likz.aqdb.entity.NivoValidacije;
+import dhz.skz.likz.aqdb.entity.Podatak;
+import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import wlcitac.util.PodatakWl;
 
 /**
  *
@@ -48,7 +55,14 @@ public class TestB2 implements TestB2Remote {
         } catch (NamingException ex) {
             log.log(Level.SEVERE, null, ex);
         }
-
+//        ProgramMjerenja pm = em.find(ProgramMjerenja.class, 38);
+//        NivoValidacije nv = em.find(NivoValidacije.class, (short)0);
+//        Podatak p = new PodatakWl();
+//        p.setVrijeme(new Date(0));
+//        p.setStatus((short)17);
+//        p.setProgramMjerenjaId(pm);
+//        p.setNivoValidacijeId(nv);
+//        em.persist((Podatak)p);
     }
 
 }

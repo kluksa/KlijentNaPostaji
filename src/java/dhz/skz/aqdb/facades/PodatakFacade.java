@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -143,10 +144,22 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
     public void pospremiNiz(NizPodataka niz) {
         ProgramMjerenja kljuc = niz.getKljuc();
         
+        log.log(Level.INFO, "Postaja {0}, komponenta {1}, prvi {2}, zadnj {3}, ukupno {4}",
+                new Object[]{kljuc.getPostajaId().getNazivPostaje(),
+                    kljuc.getKomponentaId().getFormula(),
+                    niz.getPodaci().firstKey(),
+                    niz.getPodaci().lastKey(),
+                    niz.getPodaci().size()});
+        NivoValidacije nv = new NivoValidacije((short)0);
         for (Date d : niz.getPodaci().keySet()){
             PodatakWl wlp = niz.getPodaci().get(d);
-            create(wlp);
+            Podatak p = new Podatak();
+            p.setVrijeme(d);
+            p.setProgramMjerenjaId(kljuc);
+            p.setNivoValidacijeId(nv);
+            p.setStatus(wlp.getStatus());
+            em.persist(p);
+            em.flush();
         }
     }
-
 }
