@@ -29,17 +29,7 @@ public class CitacTimerBean  {
     @EJB
     private PodatakFacade dao;
 
-    @Schedule(minute = "*", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "9-17", dayOfWeek = "Mon-Fri")
-    public void myTimer() {
-
-//        try {
-//            InitialContext ctx = new InitialContext();
-//            CitacIzvora kb = (CitacIzvora) ctx.lookup("java:module/WebloggerCitacBean");
-//        } catch (NamingException ex) {
-//            log.log(Level.SEVERE, null, ex);
-//        }
-    }
-
+    @Schedule(minute = "17", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
     public void pokreniCitace() {
         try {
             InitialContext ctx = new InitialContext();
