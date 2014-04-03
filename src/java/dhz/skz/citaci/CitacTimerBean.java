@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package dhz.skz.citaci;
 
 import dhz.skz.aqdb.facades.PodatakFacade;
@@ -21,8 +20,7 @@ import javax.naming.NamingException;
  * @author kraljevic
  */
 @Singleton
-public class CitacTimerBean  {
-
+public class CitacTimerBean {
 
     private static final Logger log = Logger.getLogger(CitacTimerBean.class.getName());
 
@@ -35,15 +33,18 @@ public class CitacTimerBean  {
             InitialContext ctx = new InitialContext();
             String str = "java:module/";
             for (IzvorPodataka ip : dao.getAktivniIzvori()) {
-                log.log(Level.INFO,"");
+                log.log(Level.INFO, "");
                 String naziv = str + ip.getNaziv().trim();
-                log.log(Level.INFO,"JNDI: {0}", naziv);
-                CitacIzvora citac = (CitacIzvora) ctx.lookup(naziv);
-                citac.procitaj(ip);
+                log.log(Level.INFO, "JNDI: {0}", naziv);
+                try {
+                    CitacIzvora citac = (CitacIzvora) ctx.lookup(naziv);
+                    citac.procitaj(ip);
+                } catch (NamingException ex) {
+                    log.log(Level.SEVERE, null, ex);
+                }
             }
         } catch (NamingException ex) {
             log.log(Level.SEVERE, null, ex);
         }
     }
-
 }
