@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wlcitac;
+package dhz.skz.citaci.weblogger.util;
 
 import dhz.skz.citaci.weblogger.validatori.Validator;
 import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.logging.Logger;
-import wlcitac.util.PodatakWl;
 
 /**
  *

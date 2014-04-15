@@ -10,7 +10,7 @@ import dhz.skz.likz.aqdb.entity.IzvorPodataka;
 import dhz.skz.likz.aqdb.entity.Podatak;
 import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
 import java.util.Map;
-import wlcitac.NizPodataka;
+import dhz.skz.citaci.weblogger.util.NizPodataka;
 
 /**
  *

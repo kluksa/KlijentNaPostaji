@@ -6,9 +6,9 @@
 package dhz.skz.citaci.weblogger.validatori;
 
 import javax.ejb.Stateless;
-import wlcitac.util.Flag;
-import wlcitac.exceptions.NevaljanStatusException;
-import wlcitac.util.Status;
+import dhz.skz.citaci.weblogger.util.Flag;
+import dhz.skz.citaci.weblogger.exceptions.NevaljanStatusException;
+import dhz.skz.citaci.weblogger.util.Status;
 
 /**
  *

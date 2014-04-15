@@ -5,6 +5,9 @@
  */
 package dhz.skz.citaci.weblogger;
 
+import dhz.skz.citaci.weblogger.zerospan.WebloggerZeroSpanCitacBean;
+import dhz.skz.citaci.weblogger.util.NizPodataka;
+import dhz.skz.citaci.weblogger.util.SatniAgregator;
 import dhz.skz.aqdb.facades.PodatakFacade;
 import dhz.skz.citaci.CitacIzvora;
 import dhz.skz.citaci.FtpKlijent;
@@ -29,11 +32,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.net.ftp.FTPFile;
-import wlcitac.NizPodataka;
-import wlcitac.SatniAgregator;
-import wlcitac.WlDatotekaParser;
-import wlcitac.WlFileFilter;
-import wlcitac.exceptions.FtpKlijentException;
+import dhz.skz.citaci.weblogger.exceptions.FtpKlijentException;
 
 /**
  *
@@ -45,9 +44,6 @@ public class WebloggerCitacBean implements CitacIzvora {
 
     private static final Logger log = Logger.getLogger(WebloggerCitacBean.class.getName());
 
-    private Map<ProgramMjerenja, NizPodataka> nizoviPodataka;
-    private Map<Postaja, Map<ProgramMjerenja, NizPodataka>> nizoviPoPostajama;
-    private Map<Postaja, Podatak> zadnjiPodatakPoPostaji;
     private final TimeZone timeZone = TimeZone.getTimeZone("UTC");
 
 
@@ -62,6 +58,9 @@ public class WebloggerCitacBean implements CitacIzvora {
 
     @EJB
     private ValidatorFactory validatorFac;
+    
+    @EJB
+    private WebloggerZeroSpanCitacBean zeroSpan;
     
     public WebloggerCitacBean() {
         
@@ -79,7 +78,8 @@ public class WebloggerCitacBean implements CitacIzvora {
             Collection<Postaja> postajeZaIzvor = dao.getPostajeZaIzvor(izvor);
             for (Postaja p : postajeZaIzvor) {
                 log.log(Level.INFO,"Citam: {0}", p.getNazivPostaje());
-                pokupiPodatkeSaPostaje(izvor, p);
+                pokupiMjerenjaSaPostaje(izvor, p);
+                zeroSpan.pokupiZeroSpanSaPostaje(izvor, p);
             }
         
         return null;
@@ -98,10 +98,10 @@ public class WebloggerCitacBean implements CitacIzvora {
         return tmp;
     }
     
-    private void pokupiPodatkeSaPostaje(IzvorPodataka izvor, Postaja p)  {
+
+
+    private void pokupiMjerenjaSaPostaje(IzvorPodataka izvor, Postaja p)  {
         Date zadnji = getZadnjiPodatak(izvor, p);
-        
-        
         try {
             Map<ProgramMjerenja, NizPodataka> tmp = getMapaNizova(p, izvor, zadnji);
             ftp.connect(new URI(izvor.getUri()));
@@ -129,6 +129,16 @@ public class WebloggerCitacBean implements CitacIzvora {
         }
     }
 
+    private Date getZadnjiPodatak(IzvorPodataka izvor, Postaja p) {
+        Date zadnji = dao.getVrijemeZadnjegNaPostajiZaIzvor(p, izvor);
+        if ( zadnji == null ) {
+            zadnji = new Date(0L);
+        }
+        log.log(Level.INFO,"Zadnji podatak na {0} u {1}",new Object[]{p.getNazivLokacije(),zadnji});
+        return zadnji;
+    }
+
+
     private void obradiISpremiNizove(Map<ProgramMjerenja, NizPodataka> ulaz) {
         for (ProgramMjerenja p : ulaz.keySet()) {
 
@@ -151,12 +161,4 @@ public class WebloggerCitacBean implements CitacIzvora {
         }
     }
 
-    private Date getZadnjiPodatak(IzvorPodataka izvor, Postaja p) {
-        Date zadnji = dao.getVrijemeZadnjegNaPostajiZaIzvor(p, izvor);
-        if ( zadnji == null ) {
-            zadnji = new Date(0L);
-        }
-        log.log(Level.INFO,"Zadnji podatak na {0} u {1}",new Object[]{p.getNazivLokacije(),zadnji});
-        return zadnji;
-    }
 }

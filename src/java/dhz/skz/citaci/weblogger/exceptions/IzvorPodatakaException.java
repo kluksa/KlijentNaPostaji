@@ -4,26 +4,28 @@
  * and open the template in the editor.
  */
 
-package wlcitac.exceptions;
+package dhz.skz.citaci.weblogger.exceptions;
+
+
 
 /**
  *
  * @author kraljevic
  */
-public class NevaljanStatusException extends Exception {
+public class IzvorPodatakaException extends Exception{
 
-    public NevaljanStatusException() {
+    public IzvorPodatakaException() {
     }
-    
-    public NevaljanStatusException(String message) {
+
+    public IzvorPodatakaException(String message) {
         super(message);
     }
 
-    public NevaljanStatusException(String message, Throwable throwable) {
+    public IzvorPodatakaException(String message, Throwable throwable) {
         super(message, throwable);
     }
-    
-    public NevaljanStatusException(Throwable throwable) {
+
+    public IzvorPodatakaException(Throwable throwable) {
         super(throwable);
     }
 }

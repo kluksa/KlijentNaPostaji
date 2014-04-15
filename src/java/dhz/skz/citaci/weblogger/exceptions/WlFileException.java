@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package wlcitac.exceptions;
+package dhz.skz.citaci.weblogger.exceptions;
 
 
 import java.util.logging.Logger;
@@ -13,20 +13,21 @@ import java.util.logging.Logger;
  *
  * @author kraljevic
  */
-public class FtpKlijentException extends Exception {
-
-    public FtpKlijentException() {
+public class WlFileException extends Exception {
+    
+    public WlFileException() {
     }
 
-    public FtpKlijentException(String message) {
+    public WlFileException(String message) {
         super(message);
     }
 
-    public FtpKlijentException(String message, Throwable throwable) {
+    public WlFileException(String message, Throwable throwable) {
         super(message, throwable);
     }
 
-    public FtpKlijentException(Throwable throwable) {
+    public WlFileException(Throwable throwable) {
         super(throwable);
     }
+
 }

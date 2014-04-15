@@ -2,17 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package wlcitac;
+package dhz.skz.citaci.weblogger.util;
 
 //import dhz.utils.LokalnaZona;
+import dhz.skz.citaci.weblogger.util.Flag;
+import dhz.skz.citaci.weblogger.util.PodatakWl;
 import dhz.skz.citaci.weblogger.validatori.Validator;
-import wlcitac.exceptions.AgregatorException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import wlcitac.util.Flag;
-import wlcitac.util.PodatakWl;
-import wlcitac.util.Status;
 
 /**
  *

@@ -6,8 +6,8 @@
 
 package dhz.skz.citaci.weblogger.validatori;
 
-import wlcitac.exceptions.NevaljanStatusException;
-import wlcitac.util.Status;
+import dhz.skz.citaci.weblogger.exceptions.NevaljanStatusException;
+import dhz.skz.citaci.weblogger.util.Status;
 
 /**
  *

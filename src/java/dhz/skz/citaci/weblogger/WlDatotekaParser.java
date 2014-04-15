@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wlcitac;
+package dhz.skz.citaci.weblogger;
 
+import dhz.skz.citaci.weblogger.util.NizPodataka;
 import com.csvreader.CsvReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,10 +21,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import wlcitac.exceptions.NevaljanStatusException;
-import wlcitac.exceptions.WlFileException;
-import wlcitac.util.PodatakWl;
-import wlcitac.util.Status;
+import dhz.skz.citaci.weblogger.exceptions.NevaljanStatusException;
+import dhz.skz.citaci.weblogger.exceptions.WlFileException;
+import dhz.skz.citaci.weblogger.util.PodatakWl;
+import dhz.skz.citaci.weblogger.util.Status;
 import dhz.skz.citaci.weblogger.validatori.Validator;
 import dhz.skz.likz.aqdb.entity.IzvorProgramKljuceviMap;
 import dhz.skz.likz.aqdb.entity.ProgramMjerenja;

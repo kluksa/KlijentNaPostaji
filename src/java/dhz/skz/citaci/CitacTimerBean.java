@@ -27,14 +27,14 @@ public class CitacTimerBean {
     @EJB
     private PodatakFacade dao;
 
-    @Schedule(minute = "17", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
+    @Schedule(minute = "39", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
     public void pokreniCitace() {
         try {
             InitialContext ctx = new InitialContext();
             String str = "java:module/";
             for (IzvorPodataka ip : dao.getAktivniIzvori()) {
                 log.log(Level.INFO, "");
-                String naziv = str + ip.getNaziv().trim();
+                String naziv = str + ip.getBean().trim();
                 log.log(Level.INFO, "JNDI: {0}", naziv);
                 try {
                     CitacIzvora citac = (CitacIzvora) ctx.lookup(naziv);

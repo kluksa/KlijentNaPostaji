@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wlcitac;
+package dhz.skz.citaci.weblogger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,30 +20,17 @@ import org.apache.commons.net.ftp.FTPFileFilter;
  *
  * @author kraljevic
  */
-public final class WlFileFilter implements FTPFileFilter {
+public class WlFileFilter implements FTPFileFilter {
 
     private static final Logger log = Logger.getLogger(WlFileFilter.class.getName());
-    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-    private Date pocetak;
-    private String nazivPostaje;
-    private TimeZone timeZone;
+    protected final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+    protected Date zadnji;
+    protected String nazivPostaje;
+    protected TimeZone timeZone;
 
-    public WlFileFilter(String nazivPostaje, Date pocetak, TimeZone timeZone) {
-        setPocetak(pocetak);
-        setNazivPostaje(nazivPostaje);
-        setTimeZone(timeZone);
-    }
-
-    public void setPocetak(Date pocetak) {
-        this.pocetak = pocetak;
-    }
-
-    public void setNazivPostaje(String nazivPostaje) {
+    public WlFileFilter(String nazivPostaje, Date zadnji ,TimeZone timeZone) {
+        this.zadnji = zadnji;
         this.nazivPostaje = Pattern.quote(nazivPostaje.toLowerCase());
-       
-    }
-
-    public void setTimeZone(TimeZone timeZone) {
         this.timeZone = timeZone;
         formatter.setTimeZone(timeZone);
     }
@@ -59,7 +46,7 @@ public final class WlFileFilter implements FTPFileFilter {
         if (m.matches()) {
             try {
                 Date sada = formatter.parse(m.group(2));
-                if (pocetak.getTime() - sada.getTime() < 24 * 3600 * 1000) {
+                if (zadnji.getTime() - sada.getTime() < 24 * 3600 * 1000) {
                     return true;
                 }
             } catch (ParseException ex) {

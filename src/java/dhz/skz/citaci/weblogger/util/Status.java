@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package wlcitac.util;
+package dhz.skz.citaci.weblogger.util;
 
-import wlcitac.util.Flag;
 
 /**
  *
