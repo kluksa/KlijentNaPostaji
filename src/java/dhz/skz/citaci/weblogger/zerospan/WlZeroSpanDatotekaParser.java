@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package dhz.skz.citaci.weblogger.zerospan;
-
 
 import com.csvreader.CsvReader;
 import dhz.skz.citaci.weblogger.exceptions.WlFileException;
@@ -32,7 +30,8 @@ import java.util.regex.Pattern;
  *
  * @author kraljevic
  */
-class WlZeroSpanDatotekaParser  {
+class WlZeroSpanDatotekaParser {
+
     private static final Logger log = Logger.getLogger(WlZeroSpanDatotekaParser.class.getName());
 
     private final Character separator;
@@ -40,7 +39,6 @@ class WlZeroSpanDatotekaParser  {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm z");
 
-    
     private Date zadnjiPodatak;
     private Map<ProgramMjerenja, NizZeroSpanPodataka> nizKanala;
     private final Map<String, ProgramMjerenja> wlKanalProgram;
@@ -49,7 +47,6 @@ class WlZeroSpanDatotekaParser  {
     private int brojStupaca;
     private Date trenutnoVrijeme;
 
-    
     public WlZeroSpanDatotekaParser(TimeZone timeZone) {
         this.wlKanalProgram = new HashMap<>();
         this.separator = ',';
@@ -71,7 +68,7 @@ class WlZeroSpanDatotekaParser  {
                 if (ipm == null || ipm.getKKljuc().isEmpty()) {
                     log.log(Level.SEVERE, "izvor_program_kljucevi_map(program_mjerenja_id = {0}) ne sadrzi K Kljuc", kljuc.getId());
                 } else {
-                    wlKanalProgram.put(kljuc.getIzvorProgramKljuceviMap().getUKljuc(), kljuc);
+                    wlKanalProgram.put(kljuc.getIzvorProgramKljuceviMap().getUKljuc().toLowerCase(), kljuc);
                 }
             } else {
                 log.log(Level.SEVERE, "izvor_program_kljucevi_map ne sadrzi program_mjerenja_id = {0}", kljuc.getId());
@@ -93,7 +90,7 @@ class WlZeroSpanDatotekaParser  {
             while (csv.readRecord()) {
                 int nc = csv.getColumnCount();
                 if (brojStupaca != nc) {
-                    log.log(Level.SEVERE,"Promijenio se broj stupaca kod zapisa {0}", csv.getRawRecord());
+                    log.log(Level.SEVERE, "Promijenio se broj stupaca kod zapisa {0}", csv.getRawRecord());
                     return;
                 }
                 try {
@@ -135,16 +132,8 @@ class WlZeroSpanDatotekaParser  {
         String[] headers = csv.getHeaders();
         for (int j = 2; j < headers.length; j += 5) {
             String komponenta = headers[j].toLowerCase();
-            if ( nizPodatakaSadrziKomponentu(komponenta)) {
-                
-            }
-            
-            Matcher matcher = pattern.matcher(headers[j].toLowerCase());
-            if (matcher.find()) {
-                String kanalBr = matcher.group(1).trim();
-                if (wlKanalProgram.containsKey(kanalBr)) {
-                    wlStupacProgram.put(j, wlKanalProgram.get(kanalBr));
-                }
+            if (wlKanalProgram.containsKey(komponenta)) {
+                wlStupacProgram.put(j, wlKanalProgram.get(komponenta));
             }
         }
     }
@@ -160,7 +149,6 @@ class WlZeroSpanDatotekaParser  {
             String vrijednostStr = csv.get(stupac + 4);
             Uredjaj uredjaj = nizPodataka.getUredjaji().floorEntry(trenutnoVrijeme).getValue();
             if (!modStr.isEmpty()) {
-                
                 try {
                     Float iznos = Float.parseFloat(vrijednostStr);
                     Float varijanca = Float.parseFloat(varStr);
@@ -172,7 +160,7 @@ class WlZeroSpanDatotekaParser  {
                     pod.setReferentnaVrijednost(refV);
                     pod.setStdev(varijanca);
                     pod.setVrijednost(iznos);
-                    
+
                     nizPodataka.dodajPodatak(trenutnoVrijeme, pod);
 
                 } catch (NumberFormatException ex) {

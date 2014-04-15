@@ -108,4 +108,8 @@ public class FtpKlijent {
             }
         }
     }
+
+    public void getFileList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
