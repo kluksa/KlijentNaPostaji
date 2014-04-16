@@ -42,7 +42,7 @@ class WlZeroSpanFileFilter implements FTPFileFilter {
         if ( file.isDirectory()) return false;
         
         String strL = file.getName().toLowerCase();
-        String ptStr = "^(" + nazivPostaje + "_C)-(\\d{8})\\.csv";
+        String ptStr = "^(" + nazivPostaje + ")_c-(\\d{8})\\.csv";
         Pattern pt = Pattern.compile(ptStr);
         Matcher m = pt.matcher(strL);
         if (m.matches()) {

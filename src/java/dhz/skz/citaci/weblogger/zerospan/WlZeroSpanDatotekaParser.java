@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -65,10 +64,13 @@ class WlZeroSpanDatotekaParser {
         for (ProgramMjerenja kljuc : nizKanala.keySet()) {
             if (kljuc.getIzvorProgramKljuceviMap() != null) {
                 IzvorProgramKljuceviMap ipm = kljuc.getIzvorProgramKljuceviMap();
-                if (ipm == null || ipm.getKKljuc().isEmpty()) {
+                if (ipm == null || ipm.getUKljuc() == null || ipm.getUKljuc().isEmpty()) {
                     log.log(Level.SEVERE, "izvor_program_kljucevi_map(program_mjerenja_id = {0}) ne sadrzi K Kljuc", kljuc.getId());
                 } else {
-                    wlKanalProgram.put(kljuc.getIzvorProgramKljuceviMap().getUKljuc().toLowerCase(), kljuc);
+                    wlKanalProgram.put(ipm.getUKljuc().toLowerCase(), kljuc);
+                    log.log(Level.INFO, "Zero/span {0} : {1} : {2}", new Object[]
+                        {kljuc.getPostajaId().getNazivPostaje(), ipm.getUKljuc(), 
+                        kljuc.getKomponentaId().getFormula()});
                 }
             } else {
                 log.log(Level.SEVERE, "izvor_program_kljucevi_map ne sadrzi program_mjerenja_id = {0}", kljuc.getId());
@@ -155,6 +157,8 @@ class WlZeroSpanDatotekaParser {
                     Float refV = Float.parseFloat(certStr);
 
                     ZeroSpan pod = new ZeroSpan();
+                    pod.setVrijeme(trenutnoVrijeme);
+                    pod.setKomponentaId(nizPodataka.getKljuc().getKomponentaId());
                     pod.setUredjajId(uredjaj);
                     pod.setVrsta(modStr);
                     pod.setReferentnaVrijednost(refV);

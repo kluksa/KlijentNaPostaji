@@ -27,7 +27,7 @@ public class CitacTimerBean {
     @EJB
     private PodatakFacade dao;
 
-    @Schedule(minute = "39", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
+    @Schedule(minute = "36", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
     public void pokreniCitace() {
         try {
             InitialContext ctx = new InitialContext();

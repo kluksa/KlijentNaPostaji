@@ -97,8 +97,6 @@ public class WebloggerCitacBean implements CitacIzvora {
         }
         return tmp;
     }
-    
-
 
     private void pokupiMjerenjaSaPostaje(IzvorPodataka izvor, Postaja p)  {
         Date zadnji = getZadnjiPodatak(izvor, p);

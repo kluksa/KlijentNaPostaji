@@ -109,7 +109,12 @@ public class FtpKlijent {
         }
     }
 
-    public void getFileList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public FTPFile[] getFileList() throws FtpKlijentException {
+        try {
+            return ftp.listFiles();
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, "Could not get File list", ex);
+            throw new FtpKlijentException("Could not get File list.", ex); 
+        }
     }
 }

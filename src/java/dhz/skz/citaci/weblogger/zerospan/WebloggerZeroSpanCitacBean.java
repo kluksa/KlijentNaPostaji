@@ -63,7 +63,7 @@ public class WebloggerZeroSpanCitacBean {
 
             WlZeroSpanFileFilter fns = new WlZeroSpanFileFilter(p.getNazivPostaje(), zadnji, timeZone);
             for (FTPFile file : ftp.getFileList(fns)) {
-                log.log(Level.INFO, "Datoteka :{0}", file.getName());
+                log.log(Level.INFO, "Zero/span datoteka :{0}", file.getName());
                 try (InputStream ifs = ftp.getFileStream(file)) {
                     citac.parse(ifs);
                 } catch (Exception ex) { // kakva god da se iznimka dogodi, nastavljamo
