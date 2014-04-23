@@ -6,7 +6,7 @@
 
 package dhz.skz.citaci.weblogger.util;
 
-import dhz.skz.likz.aqdb.entity.Podatak;
+import dhz.skz.aqdb.entity.Podatak;
 
 
 /**

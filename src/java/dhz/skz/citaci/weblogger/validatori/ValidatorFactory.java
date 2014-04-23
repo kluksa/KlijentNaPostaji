@@ -5,9 +5,9 @@
  */
 package dhz.skz.citaci.weblogger.validatori;
 
-import dhz.skz.likz.aqdb.entity.ModelUredjaja;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
-import dhz.skz.likz.aqdb.entity.ProgramUredjajLink;
+import dhz.skz.aqdb.entity.ModelUredjaja;
+import dhz.skz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.aqdb.entity.ProgramUredjajLink;
 import java.util.Date;
 import java.util.NavigableMap;
 import java.util.TreeMap;

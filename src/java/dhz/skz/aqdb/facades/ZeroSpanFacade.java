@@ -7,16 +7,16 @@
 package dhz.skz.aqdb.facades;
 
 import dhz.skz.citaci.weblogger.util.NizZeroSpanPodataka;
-import dhz.skz.likz.aqdb.entity.IzvorPodataka;
-import dhz.skz.likz.aqdb.entity.Postaja;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja_;
-import dhz.skz.likz.aqdb.entity.ProgramUredjajLink;
-import dhz.skz.likz.aqdb.entity.ProgramUredjajLink_;
-import dhz.skz.likz.aqdb.entity.Uredjaj;
-import dhz.skz.likz.aqdb.entity.Uredjaj_;
-import dhz.skz.likz.aqdb.entity.ZeroSpan;
-import dhz.skz.likz.aqdb.entity.ZeroSpan_;
+import dhz.skz.aqdb.entity.IzvorPodataka;
+import dhz.skz.aqdb.entity.Postaja;
+import dhz.skz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.aqdb.entity.ProgramMjerenja_;
+import dhz.skz.aqdb.entity.ProgramUredjajLink;
+import dhz.skz.aqdb.entity.ProgramUredjajLink_;
+import dhz.skz.aqdb.entity.Uredjaj;
+import dhz.skz.aqdb.entity.Uredjaj_;
+import dhz.skz.aqdb.entity.ZeroSpan;
+import dhz.skz.aqdb.entity.ZeroSpan_;
 import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;

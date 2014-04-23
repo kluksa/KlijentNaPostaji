@@ -5,15 +5,15 @@
  */
 package dhz.skz.aqdb.facades;
 
-import dhz.skz.likz.aqdb.entity.IzvorPodataka;
-import dhz.skz.likz.aqdb.entity.IzvorPodataka_;
-import dhz.skz.likz.aqdb.entity.NivoValidacije;
-import dhz.skz.likz.aqdb.entity.Podatak;
-import dhz.skz.likz.aqdb.entity.Podatak_;
-import dhz.skz.likz.aqdb.entity.Postaja;
-import dhz.skz.likz.aqdb.entity.Postaja_;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja_;
+import dhz.skz.aqdb.entity.IzvorPodataka;
+import dhz.skz.aqdb.entity.IzvorPodataka_;
+import dhz.skz.aqdb.entity.NivoValidacije;
+import dhz.skz.aqdb.entity.Podatak;
+import dhz.skz.aqdb.entity.Podatak_;
+import dhz.skz.aqdb.entity.Postaja;
+import dhz.skz.aqdb.entity.Postaja_;
+import dhz.skz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.aqdb.entity.ProgramMjerenja_;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;

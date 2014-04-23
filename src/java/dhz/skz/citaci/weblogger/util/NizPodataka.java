@@ -6,7 +6,7 @@
 package dhz.skz.citaci.weblogger.util;
 
 import dhz.skz.citaci.weblogger.validatori.Validator;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.aqdb.entity.ProgramMjerenja;
 import java.util.Date;
 import java.util.NavigableMap;
 import java.util.TreeMap;

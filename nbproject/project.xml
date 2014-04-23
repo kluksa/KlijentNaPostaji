@@ -8,7 +8,6 @@
             <included-library dirs="200">libs.Commons_NET.classpath</included-library>
             <included-library dirs="200">libs.JavaCSV.classpath</included-library>
             <included-library dirs="200">reference.LIKZRemoteInterface.jar</included-library>
-            <included-library dirs="200">file.reference.AQDBt2Entity.jar</included-library>
             <source-roots>
                 <root id="src.dir" name="Source Packages"/>
             </source-roots>

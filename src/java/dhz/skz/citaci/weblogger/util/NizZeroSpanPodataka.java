@@ -7,9 +7,9 @@
 package dhz.skz.citaci.weblogger.util;
 
 
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
-import dhz.skz.likz.aqdb.entity.Uredjaj;
-import dhz.skz.likz.aqdb.entity.ZeroSpan;
+import dhz.skz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.aqdb.entity.Uredjaj;
+import dhz.skz.aqdb.entity.ZeroSpan;
 import java.util.Date;
 import java.util.NavigableMap;
 import java.util.TreeMap;

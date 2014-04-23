@@ -6,9 +6,9 @@
 
 package dhz.skz.citaci;
 
-import dhz.skz.likz.aqdb.entity.IzvorPodataka;
-import dhz.skz.likz.aqdb.entity.Podatak;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.aqdb.entity.IzvorPodataka;
+import dhz.skz.aqdb.entity.Podatak;
+import dhz.skz.aqdb.entity.ProgramMjerenja;
 import java.util.Map;
 import dhz.skz.citaci.weblogger.util.NizPodataka;
 

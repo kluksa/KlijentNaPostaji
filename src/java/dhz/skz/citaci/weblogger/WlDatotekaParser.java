@@ -26,8 +26,8 @@ import dhz.skz.citaci.weblogger.exceptions.WlFileException;
 import dhz.skz.citaci.weblogger.util.PodatakWl;
 import dhz.skz.citaci.weblogger.util.Status;
 import dhz.skz.citaci.weblogger.validatori.Validator;
-import dhz.skz.likz.aqdb.entity.IzvorProgramKljuceviMap;
-import dhz.skz.likz.aqdb.entity.ProgramMjerenja;
+import dhz.skz.aqdb.entity.IzvorProgramKljuceviMap;
+import dhz.skz.aqdb.entity.ProgramMjerenja;
 
 /**
  *

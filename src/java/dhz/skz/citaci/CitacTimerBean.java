@@ -6,7 +6,7 @@
 package dhz.skz.citaci;
 
 import dhz.skz.aqdb.facades.PodatakFacade;
-import dhz.skz.likz.aqdb.entity.IzvorPodataka;
+import dhz.skz.aqdb.entity.IzvorPodataka;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
