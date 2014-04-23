@@ -7,11 +7,14 @@ package dhz.skz.aqdb.facades;
 
 import dhz.skz.aqdb.entity.IzvorPodataka;
 import dhz.skz.aqdb.entity.IzvorPodataka_;
+import dhz.skz.aqdb.entity.Komponenta;
 import dhz.skz.aqdb.entity.NivoValidacije;
 import dhz.skz.aqdb.entity.Podatak;
 import dhz.skz.aqdb.entity.Podatak_;
 import dhz.skz.aqdb.entity.Postaja;
 import dhz.skz.aqdb.entity.Postaja_;
+import dhz.skz.aqdb.entity.PrimateljiPodataka;
+import dhz.skz.aqdb.entity.PrimateljiPodataka_;
 import dhz.skz.aqdb.entity.ProgramMjerenja;
 import dhz.skz.aqdb.entity.ProgramMjerenja_;
 import java.util.Collection;
@@ -164,5 +167,37 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
             em.persist(p);
         }
         em.flush();
+    }
+    
+    public Iterable<PrimateljiPodataka> getAktivniPrimatelji() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PrimateljiPodataka> cq = cb.createQuery(PrimateljiPodataka.class);
+        Root<PrimateljiPodataka> from = cq.from(PrimateljiPodataka.class);
+        cq.where(cb.equal(from.get(PrimateljiPodataka_.aktivan), true));
+        cq.select(from);
+        return em.createQuery(cq).getResultList();
+    }
+
+    public Collection<Podatak> getPodaciZaKomponentu(Date pocetak, Date kraj, Komponenta k, NivoValidacije nv, short usporedno) {
+        em.refresh(k);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Podatak> cq = cb.createQuery(Podatak.class);
+        Root<Podatak> from = cq.from(Podatak.class);
+        Join<Podatak, ProgramMjerenja> podatakProgram = from.join(Podatak_.programMjerenjaId);
+
+        Expression<Komponenta> komponentaE = podatakProgram.get(ProgramMjerenja_.komponentaId);
+        Expression<Short> usporednoE = podatakProgram.get(ProgramMjerenja_.usporednoMjerenje);
+        Expression<NivoValidacije> nivoE = from.get(Podatak_.nivoValidacijeId);
+        Expression<Date> vrijemeE = from.get(Podatak_.vrijeme);
+        
+        cq.where(cb.and(
+                cb.equal(komponentaE, k),
+                cb.equal(nivoE, nv),
+                cb.equal(usporednoE, usporedno),
+                cb.greaterThanOrEqualTo(vrijemeE, pocetak),
+                cb.lessThanOrEqualTo(vrijemeE, kraj)
+        ));
+        cq.select(from).orderBy(cb.asc(vrijemeE));
+        return em.createQuery(cq).getResultList();
     }
 }
