@@ -14,6 +14,8 @@ import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -26,9 +28,13 @@ public class CitacTimerBean {
 
     @EJB
     private PodatakFacade dao;
+    @PersistenceContext(unitName = "CitacModulPU")
+    private EntityManager em;
 
-    @Schedule(minute = "36", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
+    @Schedule(minute = "19", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
     public void pokreniCitace() {
+        em.flush();
+        em.clear();
         try {
             InitialContext ctx = new InitialContext();
             String str = "java:module/";

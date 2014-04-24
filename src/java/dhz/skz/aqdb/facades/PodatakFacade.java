@@ -87,7 +87,27 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
         return pm;
     }
     
-    
+
+        public Podatak getPodatakNakonVremena(ProgramMjerenja pm, Date vrijeme) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Podatak> cq = cb.createQuery(Podatak.class);
+        Root<Podatak> from = cq.from(Podatak.class);
+
+        Expression<NivoValidacije> nivoValidacijeE = from.get(Podatak_.nivoValidacijeId);
+        Expression<Date> vrijemeE = from.get(Podatak_.vrijeme);
+        Expression<ProgramMjerenja> programE = from.get(Podatak_.programMjerenjaId);
+
+        cq.where(
+                cb.and(
+                    cb.equal(nivoValidacijeE, new NivoValidacije((short) 0)),
+                    cb.equal(programE, pm),
+                    cb.greaterThan(vrijemeE, vrijeme)
+                )
+        );
+        cq.select(from);
+        return em.createQuery(cq).getSingleResult();
+    }
+
     
     public Date getVrijemeZadnjegNaPostajiZaIzvor(Postaja p, IzvorPodataka i) {
         CriteriaBuilder cb = em.getCriteriaBuilder();

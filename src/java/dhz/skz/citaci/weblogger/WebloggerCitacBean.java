@@ -90,6 +90,7 @@ public class WebloggerCitacBean implements CitacIzvora {
         Map<ProgramMjerenja, NizPodataka> tmp = new HashMap<>();
         Collection<ProgramMjerenja> programNaPostajiZaIzvor = dao.getProgramNaPostajiZaIzvor(p, izvor, zadnji);
         for ( ProgramMjerenja pm : programNaPostajiZaIzvor) {
+            log.log(Level.INFO,"Program: {0}: {1}", new Object[]{pm.getPostajaId().getNazivPostaje(), pm.getKomponentaId().getFormula()});
             NizPodataka np = new NizPodataka();
             np.setKljuc(pm);
             np.setValidatori(validatorFac.getValidatori(pm));

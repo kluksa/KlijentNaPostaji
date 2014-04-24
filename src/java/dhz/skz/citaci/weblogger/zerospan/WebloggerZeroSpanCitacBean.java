@@ -49,8 +49,14 @@ public class WebloggerZeroSpanCitacBean {
 
     @EJB
     private FtpKlijent ftp;
+    private IzvorPodataka izvor;
+    private Postaja postaja;
     
     public void pokupiZeroSpanSaPostaje(IzvorPodataka izvor, Postaja p) {
+        this.izvor = izvor;
+        this.postaja = p;
+        
+        if ( imaZS()){
         Date zadnji = getZadnjiZS(izvor, p);
         
         try {
@@ -77,6 +83,7 @@ public class WebloggerZeroSpanCitacBean {
             log.log(Level.SEVERE, null, ex);
         } finally {
             ftp.disconnect();
+        }
         }
     }
     
@@ -123,5 +130,9 @@ public class WebloggerZeroSpanCitacBean {
             mapa.put(pul.getVrijemePostavljanja(), pul.getUredjajId());
         }
         return mapa;
+    }
+
+    private boolean imaZS() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
