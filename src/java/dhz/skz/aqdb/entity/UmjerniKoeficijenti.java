@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,15 +37,16 @@ public class UmjerniKoeficijenti implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "umjeravanje_id", nullable = false)
+    @NotNull
+    @Column(name = "umjeravanje_id")
     private Integer umjeravanjeId;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private long slope;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private long offset;
-    @JoinColumn(name = "umjeravanje_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "umjeravanje_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Umjeravanje umjeravanje;
     private static final Logger log = Logger.getLogger(UmjerniKoeficijenti.class.getName());
@@ -116,7 +118,7 @@ public class UmjerniKoeficijenti implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.UmjerniKoeficijenti[ umjeravanjeId=" + umjeravanjeId + " ]";
+        return "dhz.skz.aqdb.entity.UmjerniKoeficijenti[ umjeravanjeId=" + umjeravanjeId + " ]";
     }
 
 }

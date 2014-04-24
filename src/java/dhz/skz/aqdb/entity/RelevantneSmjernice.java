@@ -11,13 +11,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,9 +37,9 @@ public class RelevantneSmjernice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private Integer id;
-    @Column(length = 45)
+    @Size(max = 45)
     private String naziv;
     @ManyToMany(mappedBy = "relevantneSmjerniceCollection")
     private Collection<Komponenta> komponentaCollection;
@@ -98,7 +99,7 @@ public class RelevantneSmjernice implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.RelevantneSmjernice[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.RelevantneSmjernice[ id=" + id + " ]";
     }
 
 }

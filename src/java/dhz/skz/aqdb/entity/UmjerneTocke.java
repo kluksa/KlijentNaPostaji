@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -41,20 +42,23 @@ public class UmjerneTocke implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "referentna_vrijednost", nullable = false)
+    @NotNull
+    @Column(name = "referentna_vrijednost")
     private long referentnaVrijednost;
     @Basic(optional = false)
-    @Column(name = "mjerena_vrijednost", nullable = false)
+    @NotNull
+    @Column(name = "mjerena_vrijednost")
     private long mjerenaVrijednost;
     @Basic(optional = false)
-    @Column(name = "mjerna_nesigurnost", nullable = false)
+    @NotNull
+    @Column(name = "mjerna_nesigurnost")
     private long mjernaNesigurnost;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "umjerneTo\u010dkeId")
     private Collection<UmjeravanjePodaci> umjeravanjePodaciCollection;
-    @JoinColumn(name = "umjeravanje_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "umjeravanje_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Umjeravanje umjeravanjeId;
     private static final Logger log = Logger.getLogger(UmjerneTocke.class.getName());
@@ -144,7 +148,7 @@ public class UmjerneTocke implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.UmjerneTocke[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.UmjerneTocke[ id=" + id + " ]";
     }
 
 }

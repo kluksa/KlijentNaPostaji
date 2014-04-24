@@ -23,6 +23,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -38,28 +40,34 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ModelUredjaja.findById", query = "SELECT m FROM ModelUredjaja m WHERE m.id = :id"),
     @NamedQuery(name = "ModelUredjaja.findByOznakaModela", query = "SELECT m FROM ModelUredjaja m WHERE m.oznakaModela = :oznakaModela"),
     @NamedQuery(name = "ModelUredjaja.findByVrsta", query = "SELECT m FROM ModelUredjaja m WHERE m.vrsta = :vrsta"),
-    @NamedQuery(name = "ModelUredjaja.findByBrojMjerenjaUSatu", query = "SELECT m FROM ModelUredjaja m WHERE m.brojMjerenjaUSatu = :brojMjerenjaUSatu")})
+    @NamedQuery(name = "ModelUredjaja.findByBrojMjerenjaUSatu", query = "SELECT m FROM ModelUredjaja m WHERE m.brojMjerenjaUSatu = :brojMjerenjaUSatu"),
+    @NamedQuery(name = "ModelUredjaja.findByImaZeroSpanCal", query = "SELECT m FROM ModelUredjaja m WHERE m.imaZeroSpanCal = :imaZeroSpanCal")})
 public class ModelUredjaja implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "oznaka_modela", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "oznaka_modela")
     private String oznakaModela;
     @Basic(optional = false)
-    @Column(nullable = false, length = 1)
+    @NotNull
+    @Size(min = 1, max = 1)
     private String vrsta;
     @Basic(optional = false)
-    @Column(name = "broj_mjerenja_u_satu", nullable = false)
+    @NotNull
+    @Column(name = "broj_mjerenja_u_satu")
     private int brojMjerenjaUSatu;
+    @Column(name = "ima_zero_span_cal")
+    private Boolean imaZeroSpanCal;
     @ManyToMany(mappedBy = "modelUredjajaCollection")
     private Collection<Komponenta> komponentaCollection;
     @OneToMany(mappedBy = "modelUredjajaId")
     private Collection<Uredjaj> uredjajCollection;
-    @JoinColumn(name = "validator_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "validator_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Validatori validatorId;
     @JoinColumn(name = "proizvodjac_id", referencedColumnName = "id")
@@ -114,6 +122,14 @@ public class ModelUredjaja implements Serializable {
 
     public void setBrojMjerenjaUSatu(int brojMjerenjaUSatu) {
         this.brojMjerenjaUSatu = brojMjerenjaUSatu;
+    }
+
+    public Boolean getImaZeroSpanCal() {
+        return imaZeroSpanCal;
+    }
+
+    public void setImaZeroSpanCal(Boolean imaZeroSpanCal) {
+        this.imaZeroSpanCal = imaZeroSpanCal;
     }
 
     @XmlTransient
@@ -180,7 +196,7 @@ public class ModelUredjaja implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.ModelUredjaja[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.ModelUredjaja[ id=" + id + " ]";
     }
 
 }

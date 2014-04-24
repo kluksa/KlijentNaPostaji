@@ -11,6 +11,8 @@ import dhz.skz.aqdb.entity.PrimateljiPodataka;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.Remote;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -20,17 +22,18 @@ import javax.naming.NamingException;
  * @author kraljevic
  */
 @Singleton
-public class DiseminacijaTimerBean implements DiseminacijaTimerBeanRemote {
+public class DiseminacijaTimerBean implements DiseminacijaTimerBeanRemote{
     
     private static final Logger log = Logger.getLogger(DiseminacijaTimerBean.class.getName());
     
     @EJB
     private PodatakFacade dao;
     
+//    @Schedule(minute = "49", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
     @Override
-//    @Schedule(minute = "27", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*")
     public void pokreniDiseminaciju() {
-                try {
+        log.log(Level.INFO, "DISEMINACIJA");
+            try {
             InitialContext ctx = new InitialContext();
             String str = "java:module/";
             

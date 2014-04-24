@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -40,10 +41,10 @@ public class ZemljopisneKarakteristike implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false, length = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
     private String opis;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zemljopisneKarakteristike")
     private Collection<ZemljopisneKarakteristikePostajaLink> zemljopisneKarakteristikePostajaLinkCollection;
@@ -108,7 +109,7 @@ public class ZemljopisneKarakteristike implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.ZemljopisneKarakteristike[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.ZemljopisneKarakteristike[ id=" + id + " ]";
     }
 
 }

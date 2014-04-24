@@ -23,6 +23,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -47,30 +49,26 @@ public class ZeroSpan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date vrijeme;
     @Basic(optional = false)
-    @Column(nullable = false, length = 1)
+    @NotNull
+    @Size(min = 1, max = 2)
     private String vrsta;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(precision = 12)
     private Float vrijednost;
-    @Column(precision = 12)
     private Float minimum;
-    @Column(precision = 12)
     private Float maximum;
-    @Column(precision = 12)
     private Float stdev;
-    @Column(name = "referentna_vrijednost", precision = 12)
+    @Column(name = "referentna_vrijednost")
     private Float referentnaVrijednost;
-    @JoinColumn(name = "uredjaj_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "uredjaj_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uredjaj uredjajId;
-    @JoinColumn(name = "komponenta_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "komponenta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Komponenta komponentaId;
     private static final Logger log = Logger.getLogger(ZeroSpan.class.getName());
@@ -190,7 +188,7 @@ public class ZeroSpan implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.ZeroSpan[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.ZeroSpan[ id=" + id + " ]";
     }
 
 }

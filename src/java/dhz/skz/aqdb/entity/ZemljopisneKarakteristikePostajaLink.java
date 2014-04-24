@@ -33,7 +33,7 @@ public class ZemljopisneKarakteristikePostajaLink implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ZemljopisneKarakteristikePostajaLinkPK zemljopisneKarakteristikePostajaLinkPK;
-    @JoinColumn(name = "zemljopisne_karakteristike_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "zemljopisne_karakteristike_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private ZemljopisneKarakteristike zemljopisneKarakteristike;
     private static final Logger log = Logger.getLogger(ZemljopisneKarakteristikePostajaLink.class.getName());
@@ -87,7 +87,7 @@ public class ZemljopisneKarakteristikePostajaLink implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.ZemljopisneKarakteristikePostajaLink[ zemljopisneKarakteristikePostajaLinkPK=" + zemljopisneKarakteristikePostajaLinkPK + " ]";
+        return "dhz.skz.aqdb.entity.ZemljopisneKarakteristikePostajaLink[ zemljopisneKarakteristikePostajaLinkPK=" + zemljopisneKarakteristikePostajaLinkPK + " ]";
     }
 
 }

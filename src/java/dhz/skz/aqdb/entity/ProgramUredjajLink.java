@@ -43,7 +43,6 @@ public class ProgramUredjajLink implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Column(name = "vrijeme_postavljanja")
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,7 +55,7 @@ public class ProgramUredjajLink implements Serializable {
     @JoinColumn(name = "uredjaj_id", referencedColumnName = "id")
     @ManyToOne
     private Uredjaj uredjajId;
-    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ProgramMjerenja programMjerenjaId;
     private static final Logger log = Logger.getLogger(ProgramUredjajLink.class.getName());
@@ -138,7 +137,7 @@ public class ProgramUredjajLink implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.ProgramUredjajLink[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.ProgramUredjajLink[ id=" + id + " ]";
     }
 
 }

@@ -25,7 +25,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,8 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author kraljevic
  */
 @Entity
-@Table(catalog = "aq_t2", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"eol_oznaka"})})
+@Table(catalog = "aq_t2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Komponenta.findAll", query = "SELECT k FROM Komponenta k"),
@@ -54,36 +54,41 @@ public class Komponenta implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Column(name = "eol_oznaka")
     private Short eolOznaka;
-    @Column(name = "iso_oznaka", length = 2)
+    @Size(max = 2)
+    @Column(name = "iso_oznaka")
     private String isoOznaka;
-    @Column(length = 45)
+    @Size(max = 45)
     private String formula;
     @Basic(optional = false)
-    @Column(nullable = false, length = 60)
+    @NotNull
+    @Size(min = 1, max = 60)
     private String naziv;
-    @Column(name = "prosijek_tijekom", length = 45)
+    @Size(max = 45)
+    @Column(name = "prosijek_tijekom")
     private String prosijekTijekom;
-    @Column(name = "izrazeno_kao", length = 45)
+    @Size(max = 45)
+    @Column(name = "izrazeno_kao")
     private String izrazenoKao;
     @Column(name = "vrsta_komponente")
     private Character vrstaKomponente;
     @Basic(optional = false)
-    @Column(name = "konv_v_u_m", nullable = false)
+    @NotNull
+    @Column(name = "konv_v_u_m")
     private float konvVUM;
-    @Column(name = "naziv_eng", length = 60)
+    @Size(max = 60)
+    @Column(name = "naziv_eng")
     private String nazivEng;
     @JoinTable(name = "komponenta_has_relevantne_smjernice", joinColumns = {
-        @JoinColumn(name = "komponenta_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "relevantne_smjernice_id", referencedColumnName = "id", nullable = false)})
+        @JoinColumn(name = "komponenta_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "relevantne_smjernice_id", referencedColumnName = "id")})
     @ManyToMany
     private Collection<RelevantneSmjernice> relevantneSmjerniceCollection;
     @JoinTable(name = "model_uredjaja_komponenta_link", joinColumns = {
-        @JoinColumn(name = "komponenta_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "model_uredjaja_id", referencedColumnName = "id", nullable = false)})
+        @JoinColumn(name = "komponenta_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "model_uredjaja_id", referencedColumnName = "id")})
     @ManyToMany
     private Collection<ModelUredjaja> modelUredjajaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "komponentaId")
@@ -96,7 +101,7 @@ public class Komponenta implements Serializable {
     private Collection<ZeroSpan> zeroSpanCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "komponentaId")
     private Collection<Umjeravanje> umjeravanjeCollection;
-    @JoinColumn(name = "mjerne_jedinice_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "mjerne_jedinice_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private MjerneJedinice mjerneJediniceId;
     private static final Logger log = Logger.getLogger(Komponenta.class.getName());
@@ -287,7 +292,7 @@ public class Komponenta implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Komponenta[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.Komponenta[ id=" + id + " ]";
     }
 
 }

@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,7 +40,8 @@ public class PrometnePostajeSvojstva implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "postaja_id", nullable = false)
+    @NotNull
+    @Column(name = "postaja_id")
     private Integer postajaId;
     @Column(name = "kolicina_prometa")
     private Integer kolicinaPrometa;
@@ -48,11 +50,11 @@ public class PrometnePostajeSvojstva implements Serializable {
     @Column(name = "udio_teskih_vozila")
     private Integer udioTeskihVozila;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "udaljenost_od_procelja", precision = 12)
+    @Column(name = "udaljenost_od_procelja")
     private Float udaljenostOdProcelja;
-    @Column(name = "visina_zgrade", precision = 12)
+    @Column(name = "visina_zgrade")
     private Float visinaZgrade;
-    @JoinColumn(name = "postaja_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "postaja_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Postaja postaja;
     private static final Logger log = Logger.getLogger(PrometnePostajeSvojstva.class.getName());
@@ -142,7 +144,7 @@ public class PrometnePostajeSvojstva implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.PrometnePostajeSvojstva[ postajaId=" + postajaId + " ]";
+        return "dhz.skz.aqdb.entity.PrometnePostajeSvojstva[ postajaId=" + postajaId + " ]";
     }
 
 }

@@ -27,6 +27,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -49,20 +51,21 @@ public class Umjeravanje implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date datum;
     @Basic(optional = false)
-    @Column(name = "oznaka_umjernice", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "oznaka_umjernice")
     private String oznakaUmjernice;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private float slope;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private float offset;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "umjeravanje")
     private UmjerniKoeficijenti umjerniKoeficijenti;
@@ -72,10 +75,10 @@ public class Umjeravanje implements Serializable {
     @JoinColumn(name = "mjeritelj_id", referencedColumnName = "id")
     @ManyToOne
     private Korisnik mjeriteljId;
-    @JoinColumn(name = "komponenta_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "komponenta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Komponenta komponentaId;
-    @JoinColumn(name = "uredjaj_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "uredjaj_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uredjaj uredjajId;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "umjeravanje")
@@ -218,7 +221,7 @@ public class Umjeravanje implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Umjeravanje[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.Umjeravanje[ id=" + id + " ]";
     }
 
 }

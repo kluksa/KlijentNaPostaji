@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -20,10 +21,12 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ZemljopisneKarakteristikePostajaLinkPK implements Serializable {
     @Basic(optional = false)
-    @Column(name = "zemljopisne_karakteristike_id", nullable = false)
+    @NotNull
+    @Column(name = "zemljopisne_karakteristike_id")
     private int zemljopisneKarakteristikeId;
     @Basic(optional = false)
-    @Column(name = "postaja_id", nullable = false)
+    @NotNull
+    @Column(name = "postaja_id")
     private int postajaId;
     private static final Logger log = Logger.getLogger(ZemljopisneKarakteristikePostajaLinkPK.class.getName());
 
@@ -77,7 +80,7 @@ public class ZemljopisneKarakteristikePostajaLinkPK implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.ZemljopisneKarakteristikePostajaLinkPK[ zemljopisneKarakteristikeId=" + zemljopisneKarakteristikeId + ", postajaId=" + postajaId + " ]";
+        return "dhz.skz.aqdb.entity.ZemljopisneKarakteristikePostajaLinkPK[ zemljopisneKarakteristikeId=" + zemljopisneKarakteristikeId + ", postajaId=" + postajaId + " ]";
     }
 
 }

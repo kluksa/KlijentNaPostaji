@@ -190,6 +190,7 @@ public class PodatakFacade extends AbstractFacade<Podatak> {
     }
     
     public Iterable<PrimateljiPodataka> getAktivniPrimatelji() {
+        em.flush();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PrimateljiPodataka> cq = cb.createQuery(PrimateljiPodataka.class);
         Root<PrimateljiPodataka> from = cq.from(PrimateljiPodataka.class);

@@ -10,7 +10,6 @@ package dhz.skz.aqdb.entity;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -38,14 +38,13 @@ public class UlogeHasKorisnik implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
-    @Column(length = 45)
+    @Size(max = 45)
     private String version;
-    @JoinColumn(name = "uloge_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "uloge_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uloge ulogeId;
-    @JoinColumn(name = "korisnik_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "korisnik_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Korisnik korisnikId;
     private static final Logger log = Logger.getLogger(UlogeHasKorisnik.class.getName());
@@ -111,7 +110,7 @@ public class UlogeHasKorisnik implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.UlogeHasKorisnik[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.UlogeHasKorisnik[ id=" + id + " ]";
     }
 
 }

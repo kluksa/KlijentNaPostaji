@@ -26,6 +26,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -48,10 +50,11 @@ public class Uredjaj implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "serijska_oznaka", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "serijska_oznaka")
     private String serijskaOznaka;
     @Column(name = "godina_proizvodnje")
     private Integer godinaProizvodnje;
@@ -203,7 +206,7 @@ public class Uredjaj implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Uredjaj[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.Uredjaj[ id=" + id + " ]";
     }
 
 }

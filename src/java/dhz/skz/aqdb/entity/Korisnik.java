@@ -21,7 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -30,8 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author kraljevic
  */
 @Entity
-@Table(catalog = "aq_t2", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"korisnicko_ime"})})
+@Table(catalog = "aq_t2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Korisnik.findAll", query = "SELECT k FROM Korisnik k"),
@@ -47,17 +47,19 @@ public class Korisnik implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "korisnicko_ime", nullable = false, length = 50)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "korisnicko_ime")
     private String korisnickoIme;
     @Basic(optional = false)
-    @Column(nullable = false, length = 100)
+    @NotNull
+    @Size(min = 1, max = 100)
     private String lozinka;
-    @Column(length = 50)
+    @Size(max = 50)
     private String ime;
-    @Column(length = 50)
+    @Size(max = 50)
     private String prezime;
     private Boolean enabled;
     private Integer version;
@@ -187,7 +189,7 @@ public class Korisnik implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Korisnik[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.Korisnik[ id=" + id + " ]";
     }
 
 }

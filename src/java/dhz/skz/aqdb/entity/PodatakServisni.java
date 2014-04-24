@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,17 +42,16 @@ public class PodatakServisni implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date vrijeme;
     private Integer vrijednost;
-    @JoinColumn(name = "servisna_komponenta_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "servisna_komponenta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ServisnaKomponenta servisnaKomponentaId;
-    @JoinColumn(name = "postaja_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "postaja_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Postaja postajaId;
     private static final Logger log = Logger.getLogger(PodatakServisni.class.getName());
@@ -131,7 +130,7 @@ public class PodatakServisni implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.PodatakServisni[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.PodatakServisni[ id=" + id + " ]";
     }
 
 }

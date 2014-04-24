@@ -19,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -37,10 +39,12 @@ public class IskazVremena implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "tekst_definicija", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tekst_definicija")
     private String tekstDefinicija;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iskazVremenaId")
     private Collection<Mreza> mrezaCollection;
@@ -105,7 +109,7 @@ public class IskazVremena implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.IskazVremena[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.IskazVremena[ id=" + id + " ]";
     }
 
 }

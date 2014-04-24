@@ -10,12 +10,13 @@ package dhz.skz.aqdb.entity;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,9 +34,9 @@ public class LokacijaMjernogMjesta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private Short id;
-    @Column(length = 255)
+    @Size(max = 255)
     private String tekst;
     private static final Logger log = Logger.getLogger(LokacijaMjernogMjesta.class.getName());
 
@@ -84,7 +85,7 @@ public class LokacijaMjernogMjesta implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.LokacijaMjernogMjesta[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.LokacijaMjernogMjesta[ id=" + id + " ]";
     }
 
 }

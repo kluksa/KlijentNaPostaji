@@ -27,6 +27,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -51,33 +52,33 @@ public class Podatak implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "podatak_id", nullable = false)
+    @Column(name = "podatak_id")
     private Integer podatakId;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date vrijeme;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(precision = 12)
     private Float vrijednost;
     private Short obuhvat;
     @Basic(optional = false)
-    @Column(name = "vrijeme_upisa", nullable = false)
+    @NotNull
+    @Column(name = "vrijeme_upisa")
     @Temporal(TemporalType.TIMESTAMP)
     private Date vrijemeUpisa;
     @Column(name = "originalni_podatak_id")
     private Integer originalniPodatakId;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private int status;
     @ManyToMany(mappedBy = "podatakCollection")
     private Collection<Flag> flagCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "podatak")
     private Komentar komentar;
-    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ProgramMjerenja programMjerenjaId;
-    @JoinColumn(name = "nivo_validacije_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "nivo_validacije_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private NivoValidacije nivoValidacijeId;
     @JoinColumn(name = "mjeritelj_id", referencedColumnName = "id")
@@ -218,7 +219,7 @@ public class Podatak implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Podatak[ podatakId=" + podatakId + " ]";
+        return "dhz.skz.aqdb.entity.Podatak[ podatakId=" + podatakId + " ]";
     }
 
 }

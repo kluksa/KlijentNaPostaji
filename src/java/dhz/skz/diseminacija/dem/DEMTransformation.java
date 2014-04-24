@@ -95,7 +95,7 @@ public class DEMTransformation {
         StringBuilder sb = new StringBuilder();
         sb.append(new SimpleDateFormat("YYMMddHH").format(kraj));
         sb.append("_");
-        sb.append(primatelj.getMrezaId().getKratica());
+        sb.append(primatelj.getMrezaId());
         sb.append("_");
         sb.append(komponenta.getIsoOznaka().trim()).append(".dem");
         return sb.toString();

@@ -25,7 +25,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,11 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author kraljevic
  */
 @Entity
-@Table(catalog = "aq_t2", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"nacionalna_oznaka"}),
-    @UniqueConstraint(columnNames = {"kratka_oznaka"}),
-    @UniqueConstraint(columnNames = {"oznaka_postaje"}),
-    @UniqueConstraint(columnNames = {"naziv_postaje"})})
+@Table(catalog = "aq_t2", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Postaja.findAll", query = "SELECT p FROM Postaja p"),
@@ -58,29 +55,36 @@ public class Postaja implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "naziv_postaje", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "naziv_postaje")
     private String nazivPostaje;
-    @Column(name = "naziv_lokacije", length = 255)
+    @Size(max = 255)
+    @Column(name = "naziv_lokacije")
     private String nazivLokacije;
-    @Column(name = "nacionalna_oznaka", length = 8)
+    @Size(max = 8)
+    @Column(name = "nacionalna_oznaka")
     private String nacionalnaOznaka;
-    @Column(name = "oznaka_postaje", length = 8)
+    @Size(max = 8)
+    @Column(name = "oznaka_postaje")
     private String oznakaPostaje;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "geogr_duzina", precision = 12)
+    @Column(name = "geogr_duzina")
     private Float geogrDuzina;
-    @Column(name = "geogr_sirina", precision = 12)
+    @Column(name = "geogr_sirina")
     private Float geogrSirina;
     @Column(name = "nadmorska_visina")
     private Integer nadmorskaVisina;
-    @Column(name = "nuts_oznaka", length = 45)
+    @Size(max = 45)
+    @Column(name = "nuts_oznaka")
     private String nutsOznaka;
     private Integer stanovnistvo;
     @Basic(optional = false)
-    @Column(name = "kratka_oznaka", nullable = false, length = 15)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "kratka_oznaka")
     private String kratkaOznaka;
     @ManyToMany(mappedBy = "postajaCollection")
     private Collection<CiljeviPracenja> ciljeviPracenjaCollection;
@@ -304,7 +308,7 @@ public class Postaja implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Postaja[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.Postaja[ id=" + id + " ]";
     }
 
 }

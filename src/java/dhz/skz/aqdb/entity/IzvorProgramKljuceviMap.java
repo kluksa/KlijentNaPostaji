@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -38,17 +40,22 @@ public class IzvorProgramKljuceviMap implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "program_mjerenja_id", nullable = false)
+    @NotNull
+    @Column(name = "program_mjerenja_id")
     private Integer programMjerenjaId;
-    @Column(name = "p_kljuc", length = 45)
+    @Size(max = 45)
+    @Column(name = "p_kljuc")
     private String pKljuc;
-    @Column(name = "k_kljuc", length = 45)
+    @Size(max = 45)
+    @Column(name = "k_kljuc")
     private String kKljuc;
-    @Column(name = "u_kljuc", length = 45)
+    @Size(max = 45)
+    @Column(name = "u_kljuc")
     private String uKljuc;
-    @Column(name = "n_kljuc", length = 45)
+    @Size(max = 45)
+    @Column(name = "n_kljuc")
     private String nKljuc;
-    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private ProgramMjerenja programMjerenja;
     private static final Logger log = Logger.getLogger(IzvorProgramKljuceviMap.class.getName());
@@ -130,7 +137,7 @@ public class IzvorProgramKljuceviMap implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.IzvorProgramKljuceviMap[ programMjerenjaId=" + programMjerenjaId + " ]";
+        return "dhz.skz.aqdb.entity.IzvorProgramKljuceviMap[ programMjerenjaId=" + programMjerenjaId + " ]";
     }
 
 }

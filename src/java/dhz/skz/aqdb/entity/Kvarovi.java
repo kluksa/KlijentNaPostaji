@@ -26,6 +26,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,22 +48,23 @@ public class Kvarovi implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date datum;
     @Basic(optional = false)
+    @NotNull
     @Lob
-    @Column(name = "opis_kvara", nullable = false, length = 2147483647)
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "opis_kvara")
     private String opisKvara;
     @Column(name = "datum_popravka")
     @Temporal(TemporalType.DATE)
     private Date datumPopravka;
-    @Column(length = 45)
+    @Size(max = 45)
     private String kvarovicol;
-    @JoinColumn(name = "uredjaj_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "uredjaj_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uredjaj uredjajId;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "kvarovi")
@@ -159,7 +162,7 @@ public class Kvarovi implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Kvarovi[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.Kvarovi[ id=" + id + " ]";
     }
 
 }

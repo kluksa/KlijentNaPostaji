@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,16 +39,16 @@ public class UmjeravanjePodaci implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date vrijeme;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private long vrijednost;
-    @JoinColumn(name = "umjerne_to\u010dke_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "umjerne_to\u010dke_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private UmjerneTocke umjerneTočkeId;
     private static final Logger log = Logger.getLogger(UmjeravanjePodaci.class.getName());
@@ -120,7 +120,7 @@ public class UmjeravanjePodaci implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.UmjeravanjePodaci[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.UmjeravanjePodaci[ id=" + id + " ]";
     }
 
 }

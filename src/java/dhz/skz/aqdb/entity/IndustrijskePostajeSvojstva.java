@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -39,17 +40,18 @@ public class IndustrijskePostajeSvojstva implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "postaja_id", nullable = false)
+    @NotNull
+    @Column(name = "postaja_id")
     private Integer postajaId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "udaljenost_od_izvora", precision = 12)
+    @Column(name = "udaljenost_od_izvora")
     private Float udaljenostOdIzvora;
     @JoinTable(name = "industrijske_postaje_svojstva_has_snap_sektori", joinColumns = {
-        @JoinColumn(name = "industrijske_postaje_svojstva_postaja_id", referencedColumnName = "postaja_id", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "snap_sektori_id", referencedColumnName = "id", nullable = false)})
+        @JoinColumn(name = "industrijske_postaje_svojstva_postaja_id", referencedColumnName = "postaja_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "snap_sektori_id", referencedColumnName = "id")})
     @ManyToMany
     private Collection<SnapSektori> snapSektoriCollection;
-    @JoinColumn(name = "postaja_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "postaja_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Postaja postaja;
     private static final Logger log = Logger.getLogger(IndustrijskePostajeSvojstva.class.getName());
@@ -116,7 +118,7 @@ public class IndustrijskePostajeSvojstva implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.IndustrijskePostajeSvojstva[ postajaId=" + postajaId + " ]";
+        return "dhz.skz.aqdb.entity.IndustrijskePostajeSvojstva[ postajaId=" + postajaId + " ]";
     }
 
 }

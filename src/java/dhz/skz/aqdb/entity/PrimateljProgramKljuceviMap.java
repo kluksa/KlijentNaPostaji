@@ -9,15 +9,15 @@ package dhz.skz.aqdb.entity;
 
 import java.io.Serializable;
 import java.util.logging.Logger;
-import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,43 +29,53 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PrimateljProgramKljuceviMap.findAll", query = "SELECT p FROM PrimateljProgramKljuceviMap p"),
-    @NamedQuery(name = "PrimateljProgramKljuceviMap.findByProgramMjerenjaId", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.programMjerenjaId = :programMjerenjaId"),
+    @NamedQuery(name = "PrimateljProgramKljuceviMap.findByProgramMjerenjaId", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.primateljProgramKljuceviMapPK.programMjerenjaId = :programMjerenjaId"),
     @NamedQuery(name = "PrimateljProgramKljuceviMap.findByPKljuc", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.pKljuc = :pKljuc"),
     @NamedQuery(name = "PrimateljProgramKljuceviMap.findByKKljuc", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.kKljuc = :kKljuc"),
     @NamedQuery(name = "PrimateljProgramKljuceviMap.findByUKljuc", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.uKljuc = :uKljuc"),
-    @NamedQuery(name = "PrimateljProgramKljuceviMap.findByNKljuc", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.nKljuc = :nKljuc")})
+    @NamedQuery(name = "PrimateljProgramKljuceviMap.findByNKljuc", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.nKljuc = :nKljuc"),
+    @NamedQuery(name = "PrimateljProgramKljuceviMap.findByPrimateljId", query = "SELECT p FROM PrimateljProgramKljuceviMap p WHERE p.primateljProgramKljuceviMapPK.primateljId = :primateljId")})
 public class PrimateljProgramKljuceviMap implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "program_mjerenja_id", nullable = false)
-    private Integer programMjerenjaId;
-    @Column(name = "p_kljuc", length = 45)
+    @EmbeddedId
+    protected PrimateljProgramKljuceviMapPK primateljProgramKljuceviMapPK;
+    @Size(max = 45)
+    @Column(name = "p_kljuc")
     private String pKljuc;
-    @Column(name = "k_kljuc", length = 45)
+    @Size(max = 45)
+    @Column(name = "k_kljuc")
     private String kKljuc;
-    @Column(name = "u_kljuc", length = 45)
+    @Size(max = 45)
+    @Column(name = "u_kljuc")
     private String uKljuc;
-    @Column(name = "n_kljuc", length = 45)
+    @Size(max = 45)
+    @Column(name = "n_kljuc")
     private String nKljuc;
-    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @JoinColumn(name = "program_mjerenja_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
     private ProgramMjerenja programMjerenja;
+    @JoinColumn(name = "primatelj_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private PrimateljiPodataka primateljiPodataka;
     private static final Logger log = Logger.getLogger(PrimateljProgramKljuceviMap.class.getName());
 
     public PrimateljProgramKljuceviMap() {
     }
 
-    public PrimateljProgramKljuceviMap(Integer programMjerenjaId) {
-        this.programMjerenjaId = programMjerenjaId;
+    public PrimateljProgramKljuceviMap(PrimateljProgramKljuceviMapPK primateljProgramKljuceviMapPK) {
+        this.primateljProgramKljuceviMapPK = primateljProgramKljuceviMapPK;
     }
 
-    public Integer getProgramMjerenjaId() {
-        return programMjerenjaId;
+    public PrimateljProgramKljuceviMap(int programMjerenjaId, int primateljId) {
+        this.primateljProgramKljuceviMapPK = new PrimateljProgramKljuceviMapPK(programMjerenjaId, primateljId);
     }
 
-    public void setProgramMjerenjaId(Integer programMjerenjaId) {
-        this.programMjerenjaId = programMjerenjaId;
+    public PrimateljProgramKljuceviMapPK getPrimateljProgramKljuceviMapPK() {
+        return primateljProgramKljuceviMapPK;
+    }
+
+    public void setPrimateljProgramKljuceviMapPK(PrimateljProgramKljuceviMapPK primateljProgramKljuceviMapPK) {
+        this.primateljProgramKljuceviMapPK = primateljProgramKljuceviMapPK;
     }
 
     public String getPKljuc() {
@@ -108,10 +118,18 @@ public class PrimateljProgramKljuceviMap implements Serializable {
         this.programMjerenja = programMjerenja;
     }
 
+    public PrimateljiPodataka getPrimateljiPodataka() {
+        return primateljiPodataka;
+    }
+
+    public void setPrimateljiPodataka(PrimateljiPodataka primateljiPodataka) {
+        this.primateljiPodataka = primateljiPodataka;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (programMjerenjaId != null ? programMjerenjaId.hashCode() : 0);
+        hash += (primateljProgramKljuceviMapPK != null ? primateljProgramKljuceviMapPK.hashCode() : 0);
         return hash;
     }
 
@@ -122,7 +140,7 @@ public class PrimateljProgramKljuceviMap implements Serializable {
             return false;
         }
         PrimateljProgramKljuceviMap other = (PrimateljProgramKljuceviMap) object;
-        if ((this.programMjerenjaId == null && other.programMjerenjaId != null) || (this.programMjerenjaId != null && !this.programMjerenjaId.equals(other.programMjerenjaId))) {
+        if ((this.primateljProgramKljuceviMapPK == null && other.primateljProgramKljuceviMapPK != null) || (this.primateljProgramKljuceviMapPK != null && !this.primateljProgramKljuceviMapPK.equals(other.primateljProgramKljuceviMapPK))) {
             return false;
         }
         return true;
@@ -130,7 +148,7 @@ public class PrimateljProgramKljuceviMap implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.PrimateljProgramKljuceviMap[ programMjerenjaId=" + programMjerenjaId + " ]";
+        return "dhz.skz.aqdb.entity.PrimateljProgramKljuceviMap[ primateljProgramKljuceviMapPK=" + primateljProgramKljuceviMapPK + " ]";
     }
 
 }

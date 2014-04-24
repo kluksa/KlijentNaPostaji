@@ -19,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -38,12 +40,15 @@ public class VrstaMreze implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "terenska_oznaka", nullable = false, length = 45)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "terenska_oznaka")
     private String terenskaOznaka;
-    @Column(name = "opis_razine", length = 255)
+    @Size(max = 255)
+    @Column(name = "opis_razine")
     private String opisRazine;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vrstaId")
     private Collection<Mreza> mrezaCollection;
@@ -116,7 +121,7 @@ public class VrstaMreze implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.VrstaMreze[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.VrstaMreze[ id=" + id + " ]";
     }
 
 }

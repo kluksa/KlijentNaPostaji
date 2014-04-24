@@ -21,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -46,26 +48,35 @@ public class OdgovornoTijelo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false, length = 255)
+    @NotNull
+    @Size(min = 1, max = 255)
     private String naziv;
     @Basic(optional = false)
-    @Column(name = "odgovorna_osoba", nullable = false, length = 255)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "odgovorna_osoba")
     private String odgovornaOsoba;
     @Basic(optional = false)
-    @Column(nullable = false, length = 255)
+    @NotNull
+    @Size(min = 1, max = 255)
     private String adresa;
     @Basic(optional = false)
-    @Column(nullable = false, length = 255)
+    @NotNull
+    @Size(min = 1, max = 255)
     private String telefon;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @Column(nullable = false, length = 255)
+    @NotNull
+    @Size(min = 1, max = 255)
     private String fax;
-    @Column(name = "e_mail", length = 255)
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 255)
+    @Column(name = "e_mail")
     private String eMail;
-    @Column(name = "internet_adresa", length = 255)
+    @Size(max = 255)
+    @Column(name = "internet_adresa")
     private String internetAdresa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tijeloId")
     private Collection<Mreza> mrezaCollection;
@@ -193,7 +204,7 @@ public class OdgovornoTijelo implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.OdgovornoTijelo[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.OdgovornoTijelo[ id=" + id + " ]";
     }
 
 }

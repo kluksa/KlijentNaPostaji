@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,11 +37,12 @@ public class Komentar implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "podatak_id", nullable = false)
+    @NotNull
+    @Column(name = "podatak_id")
     private Integer podatakId;
-    @Column(length = 255)
+    @Size(max = 255)
     private String tekst;
-    @JoinColumn(name = "podatak_id", referencedColumnName = "podatak_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "podatak_id", referencedColumnName = "podatak_id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Podatak podatak;
     private static final Logger log = Logger.getLogger(Komentar.class.getName());
@@ -97,7 +100,7 @@ public class Komentar implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Komentar[ podatakId=" + podatakId + " ]";
+        return "dhz.skz.aqdb.entity.Komentar[ podatakId=" + podatakId + " ]";
     }
 
 }

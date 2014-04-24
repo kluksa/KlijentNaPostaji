@@ -28,6 +28,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -50,10 +51,10 @@ public class ProgramMjerenja implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "usporedno_mjerenje", nullable = false)
+    @NotNull
+    @Column(name = "usporedno_mjerenje")
     private short usporednoMjerenje;
     @Column(name = "pocetak_mjerenja")
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,17 +66,17 @@ public class ProgramMjerenja implements Serializable {
     private Boolean prikazWeb;
     @ManyToMany(mappedBy = "programMjerenjaCollection")
     private Collection<PrimateljiPodataka> primateljiPodatakaCollection;
-    @JoinColumn(name = "izvor_podataka_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "izvor_podataka_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private IzvorPodataka izvorPodatakaId;
-    @JoinColumn(name = "postaja_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "postaja_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Postaja postajaId;
-    @JoinColumn(name = "komponenta_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "komponenta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Komponenta komponentaId;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "programMjerenja")
-    private PrimateljProgramKljuceviMap primateljProgramKljuceviMap;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programMjerenja")
+    private Collection<PrimateljProgramKljuceviMap> primateljProgramKljuceviMapCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programMjerenjaId")
     private Collection<Podatak> podatakCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "programMjerenja")
@@ -169,12 +170,13 @@ public class ProgramMjerenja implements Serializable {
         this.komponentaId = komponentaId;
     }
 
-    public PrimateljProgramKljuceviMap getPrimateljProgramKljuceviMap() {
-        return primateljProgramKljuceviMap;
+    @XmlTransient
+    public Collection<PrimateljProgramKljuceviMap> getPrimateljProgramKljuceviMapCollection() {
+        return primateljProgramKljuceviMapCollection;
     }
 
-    public void setPrimateljProgramKljuceviMap(PrimateljProgramKljuceviMap primateljProgramKljuceviMap) {
-        this.primateljProgramKljuceviMap = primateljProgramKljuceviMap;
+    public void setPrimateljProgramKljuceviMapCollection(Collection<PrimateljProgramKljuceviMap> primateljProgramKljuceviMapCollection) {
+        this.primateljProgramKljuceviMapCollection = primateljProgramKljuceviMapCollection;
     }
 
     @XmlTransient
@@ -225,7 +227,7 @@ public class ProgramMjerenja implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.ProgramMjerenja[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.ProgramMjerenja[ id=" + id + " ]";
     }
 
 }

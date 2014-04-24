@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,6 +19,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -38,13 +39,13 @@ public class Flag implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false)
+    @NotNull
     private Integer id;
-    @Column(length = 45)
+    @Size(max = 45)
     private String opis;
     @JoinTable(name = "podatak_has_flag", joinColumns = {
-        @JoinColumn(name = "flag_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "podatak_id", referencedColumnName = "podatak_id", nullable = false)})
+        @JoinColumn(name = "flag_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "podatak_id", referencedColumnName = "podatak_id")})
     @ManyToMany
     private Collection<Podatak> podatakCollection;
     private static final Logger log = Logger.getLogger(Flag.class.getName());
@@ -103,7 +104,7 @@ public class Flag implements Serializable {
 
     @Override
     public String toString() {
-        return "dhz.skz.likz.aqdb.entity.Flag[ id=" + id + " ]";
+        return "dhz.skz.aqdb.entity.Flag[ id=" + id + " ]";
     }
 
 }
