@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.datatype.XMLGregorianCalendar;
 import klijentnapostaji.webservice.CsvOmotnica;
+import klijentnapostaji.webservice.CsvPrihvatException_Exception;
 import klijentnapostaji.webservice.PrihvatSirovihPodataka;
 
 /**
@@ -25,9 +26,21 @@ public class FileTicker implements Runnable {
 
     private static final Logger log = Logger.getLogger(FileTicker.class.getName());
 
-    private CitacDatoteke citac;
     private PrihvatSirovihPodataka servis;
-    private ServisWrapper servisW;
+    private FileListGenerator fileListGen;
+    private CsvOmotnicaBuilder csvOBuilder;
+
+    public void setServis(PrihvatSirovihPodataka servis) {
+        this.servis = servis;
+    }
+
+    public void setFileListGen(FileListGenerator fileListGen) {
+        this.fileListGen = fileListGen;
+    }
+
+    public void setCsvOBuilder(CsvOmotnicaBuilder csvOBuilder) {
+        this.csvOBuilder = csvOBuilder;
+    }
     
     
 
@@ -38,44 +51,35 @@ public class FileTicker implements Runnable {
         log.info(str);
         XMLGregorianCalendar vrijemeZadnjeg = servis.getVrijemeZadnjeg(str, str, str);
         Date zadnji;
-        for (File datoteka : getDatoteke(zadnji)) {
-            citac.setDatoteka(datoteka);
-            String[] headeri = citac.getHeaderi();
-            List<String[]> linije = citac.getLinije();
-            
+        for (File datoteka : fileListGen.getFileList(str, start)) {
+            try {
+                procitaj(datoteka);
+                
+                String[] headeri = getHeaderi(datoteka);
+                List<String[]> linije = getLinije(datoteka);
+                CsvOmotnica create = csvOBuilder.create(headeri, linije);
+                servis.prebaciOmotnicu(create);
+            } catch (CsvPrihvatException_Exception ex) {
+                log.log(Level.SEVERE, null, ex);
+            }
         }
         
         
-        try {
-            dbm.nadjiVrijemeDatoteke(datoteka);
-            log.log(Level.INFO, "AAA {0}", datoteka.getZadnjeVrijeme().toString());
-            FileInputStream fis = new FileInputStream(datoteka.getFilename());
-            parser.parse(fis);
-            datoteka.setParametri(parser.getParametri());
-            dbm.spremiVrijemeDatoteke(datoteka);
-            log.log(Level.INFO, "OOO {0}", datoteka.getZadnjeVrijeme().toString());
-            dbm.spremiMjerenja(datoteka);
-            dbm.close();
-            fis.close();
-        } catch (SQLException ex) {
-            log.log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            log.log(Level.SEVERE, null, ex);
-        }
         final Date end = new Date();
         str = "Ticker zavrsio za " + (end.getTime() - start.getTime()) + "ms";
         log.info(str);
     }
 
-    public FileParser getParser() {
-        return parser;
+
+    private void procitaj(File datoteka) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setParser(FileParser parser) {
-        this.parser = parser;
+    private String[] getHeaderi(File datoteka) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private Iterable<File> getDatoteke(Date zadnji) {
+    private List<String[]> getLinije(File datoteka) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
