@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka.wsdl" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/PrihvatSirovihPodataka.wsdl"/>
+    <system systemId="file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka_schema1.xsd" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/PrihvatSirovihPodataka_schema1.xsd"/>
+    <system systemId="file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka_schema2.xsd" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/PrihvatSirovihPodataka_schema2.xsd"/>
+</catalog>
