@@ -3,29 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package klijentnapostaji;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import javax.xml.parsers.ParserConfigurationException;
 import klijentnapostaji.citac.CsvFileTicker;
 import klijentnapostaji.citac.CsvOmotnicaBuilder;
 import klijentnapostaji.citac.filelistgeneratori.MLUFileListGenerator;
 import klijentnapostaji.webservice.PrihvatServisLocalImpl;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.tanukisoftware.wrapper.WrapperListener;
 import org.tanukisoftware.wrapper.WrapperManager;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -61,7 +55,8 @@ public class KlijentNaPostaji implements WrapperListener {
 
     @Override
     public Integer start(String[] strings) {
-//        try {
+        try {
+            //        try {
 //            FileHandler fh = new FileHandler("klijent.log");
 //            fh.setFormatter(new SimpleFormatter());
 //            Logger.getLogger("").addHandler(fh);
@@ -72,28 +67,32 @@ public class KlijentNaPostaji implements WrapperListener {
 //        } catch (SecurityException ex) {
 //            log.log(Level.SEVERE, null, ex);
 //        }
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        TimeZone timeZone = TimeZone.getTimeZone("UTC");
-        sdf.setTimeZone(timeZone);
+            XMLConfiguration config = new XMLConfiguration("/home/kraljevic/config.xml");
 
-        MLUFileListGenerator mfg = new MLUFileListGenerator();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            TimeZone timeZone = TimeZone.getTimeZone("UTC");
+            sdf.setTimeZone(timeZone);
 
-        CsvOmotnicaBuilder ob = new CsvOmotnicaBuilder();
-        ob.setDatoteka(mfg.getFileList(null, null)[0].getName());
-        ob.setIzvor("MLULogger");
-        ob.setPostaja("Slavonski brod 2");
+            MLUFileListGenerator mfg = new MLUFileListGenerator();
 
-        CsvFileTicker f = new CsvFileTicker();
-        f.setServis(new PrihvatServisLocalImpl());
-        f.setStupciSaVremenom(new Integer[]{0});
-        f.setDateFormat(sdf);
-        f.setFileListGen(mfg);
-        f.setCsvOBuilder(ob);
-        
-        log.info("Pokretanje programa");
-        f.run();
-        
+            CsvOmotnicaBuilder ob = new CsvOmotnicaBuilder();
+            ob.setDatoteka(mfg.getFileList(null, null)[0].getName());
+            ob.setIzvor("MLULogger");
+            ob.setPostaja("Slavonski brod 2");
+
+            CsvFileTicker f = new CsvFileTicker();
+            f.setServis(new PrihvatServisLocalImpl());
+            f.setStupciSaVremenom(new Integer[]{0});
+            f.setDateFormat(sdf);
+            f.setFileListGen(mfg);
+            f.setCsvOBuilder(ob);
+
+            log.info("Pokretanje programa");
+            f.run();
+        } catch (ConfigurationException ex) {
+            log.log(Level.SEVERE, null, ex);
+        }
+
 //        final Konfiguracija konfiguracija = new Konfiguracija();
 //        try {
 //            konfiguracija.validiraj();
