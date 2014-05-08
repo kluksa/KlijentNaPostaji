@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package klijentnapostaji.citac;
+package klijentnapostaji.citac.filelistgeneratori;
 
 import java.io.File;
 import java.util.Date;

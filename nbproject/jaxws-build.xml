@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-PrihvatSirovihPodataka" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka"/>
-        <property name="wsdl-PrihvatSirovihPodataka" location="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/PrihvatSirovihPodataka.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka" destdir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka" wsdl="${wsdl-PrihvatSirovihPodataka}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka.wsdl" xnocompile="true" xendorsed="true" package="klijentnapostaji.webservice">
+        <property name="wsdl-PrihvatSirovihPodataka" location="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka" destdir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka" wsdl="${wsdl-PrihvatSirovihPodataka}" catalog="catalog.xml" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?wsdl" xnocompile="true" xendorsed="true" package="klijentnapostaji.webservice">
             <depends file="${wsdl-PrihvatSirovihPodataka}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka"/>
         </wsimport>

@@ -3,8 +3,8 @@
   <services/>
   <clients>
     <client name="PrihvatSirovihPodataka">
-      <wsdl-url>file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka.wsdl</wsdl-url>
-      <local-wsdl-file>PrihvatSirovihPodataka.wsdl</local-wsdl-file>
+      <wsdl-url>http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?wsdl</wsdl-url>
+      <local-wsdl-file>localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.wsdl</local-wsdl-file>
       <package-name forceReplace="true">klijentnapostaji.webservice</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -22,7 +22,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka.wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

@@ -3,4 +3,7 @@
     <system systemId="file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka.wsdl" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/PrihvatSirovihPodataka.wsdl"/>
     <system systemId="file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka_schema1.xsd" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/PrihvatSirovihPodataka_schema1.xsd"/>
     <system systemId="file:/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/PrihvatSirovihPodataka_schema2.xsd" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/PrihvatSirovihPodataka_schema2.xsd"/>
+    <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?wsdl" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.wsdl"/>
+    <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?xsd=1" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.xsd_1.xsd"/>
+    <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?xsd=2" uri="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.xsd_2.xsd"/>
 </catalog>

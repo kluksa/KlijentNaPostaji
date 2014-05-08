@@ -4,33 +4,53 @@
  */
 package klijentnapostaji.citac;
 
+import klijentnapostaji.webservice.PrihvatServisLocalImpl;
+import klijentnapostaji.citac.filelistgeneratori.FileListGenerator;
+import klijentnapostaji.citac.exceptions.ParserException;
+import klijentnapostaji.citac.exceptions.PrihvatWSException;
+import com.csvreader.CsvReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.datatype.XMLGregorianCalendar;
 import klijentnapostaji.webservice.CsvOmotnica;
-import klijentnapostaji.webservice.CsvPrihvatException_Exception;
-import klijentnapostaji.webservice.PrihvatSirovihPodataka;
 
 /**
  *
  * @author kraljevic
  */
-public class FileTicker implements Runnable {
+public class CsvFileTicker implements Runnable {
 
-    private static final Logger log = Logger.getLogger(FileTicker.class.getName());
+    private static final Logger log = Logger.getLogger(CsvFileTicker.class.getName());
 
-    private PrihvatSirovihPodataka servis;
+    private PrihvatServisLocalImpl servis;
     private FileListGenerator fileListGen;
     private CsvOmotnicaBuilder csvOBuilder;
+    private Integer[] stupciSaVremenom;
+    private DateFormat dateFormat;
+    private char separator = ';';
+    private Charset chareset = Charset.forName("UTF-8");
 
-    public void setServis(PrihvatSirovihPodataka servis) {
+    private String[] headeri;
+    private List<String[]> linije;
+    private int brojStupaca;
+    private Date trenutnoVrijeme;
+
+    public void setChareset(Charset chareset) {
+        this.chareset = chareset;
+    }
+
+    public void setSeparator(char separator) {
+        this.separator = separator;
+    }
+
+    public void setServis(PrihvatServisLocalImpl servis) {
         this.servis = servis;
     }
 
@@ -41,46 +61,73 @@ public class FileTicker implements Runnable {
     public void setCsvOBuilder(CsvOmotnicaBuilder csvOBuilder) {
         this.csvOBuilder = csvOBuilder;
     }
-    
-    
 
     @Override
     public void run() {
         final Date start = new Date();
         String str = "Ticker pokrenut";
         log.info(str);
-        XMLGregorianCalendar vrijemeZadnjeg = servis.getVrijemeZadnjeg(str, str, str);
-        Date zadnji;
+        Date zadnji = servis.getVrijemeZadnjeg(str, str, str);
         for (File datoteka : fileListGen.getFileList(str, start)) {
             try {
-                procitaj(datoteka);
-                
-                String[] headeri = getHeaderi(datoteka);
-                List<String[]> linije = getLinije(datoteka);
+                procitaj(datoteka, zadnji);
                 CsvOmotnica create = csvOBuilder.create(headeri, linije);
                 servis.prebaciOmotnicu(create);
-            } catch (CsvPrihvatException_Exception ex) {
+            } catch (IOException ex) {
+                log.log(Level.SEVERE, null, ex);
+            } catch (ParserException ex) {
+                log.log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                log.log(Level.SEVERE, null, ex);
+            } catch (PrihvatWSException ex) {
                 log.log(Level.SEVERE, null, ex);
             }
         }
-        
-        
+
         final Date end = new Date();
         str = "Ticker zavrsio za " + (end.getTime() - start.getTime()) + "ms";
         log.info(str);
     }
 
+    private void procitaj(File datoteka, Date zadnji) throws ParserException, IOException, ParseException {
+        CsvReader csv = new CsvReader(datoteka.getCanonicalPath(), separator, chareset);
+        try {
 
-    private void procitaj(File datoteka) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            csv.readHeaders();
+            brojStupaca = csv.getHeaderCount();
+            headeri = csv.getHeaders();
+            linije = new ArrayList<>();
+
+            while (csv.readRecord()) {
+                int nc = csv.getColumnCount();
+                if (brojStupaca != nc) {
+                    log.log(Level.SEVERE, "Promijenio se broj stupaca kod zapisa {0}", csv.getRawRecord());
+                    throw new ParserException();
+                }
+                trenutnoVrijeme = getVrijeme(csv);
+                if (trenutnoVrijeme.after(zadnji)) {
+                    linije.add(csv.getValues());
+                }
+            }
+        } finally {
+            csv.close();
+        }
     }
 
-    private String[] getHeaderi(File datoteka) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setStupciSaVremenom(Integer[] stupciSaVremenom) {
+        this.stupciSaVremenom = stupciSaVremenom;
     }
 
-    private List<String[]> getLinije(File datoteka) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setDateFormat(DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    private Date getVrijeme(CsvReader csv) throws IOException, ParseException {
+        String vrijemeStr = "";
+        for (Integer i : stupciSaVremenom) {
+            vrijemeStr += csv.get(i) + " ";
+        }
+        return dateFormat.parse(vrijemeStr);
     }
 
 }
