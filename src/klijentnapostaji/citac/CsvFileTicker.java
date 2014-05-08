@@ -90,9 +90,10 @@ public class CsvFileTicker implements Runnable {
     }
 
     private void procitaj(File datoteka, Date zadnji) throws ParserException, IOException, ParseException {
+        log.log(Level.FINE, "Datoteka: {0}, zadnji: {1}", new Object[]{datoteka.getAbsoluteFile(), zadnji});
+ 
         CsvReader csv = new CsvReader(datoteka.getCanonicalPath(), separator, chareset);
         try {
-
             csv.readHeaders();
             brojStupaca = csv.getHeaderCount();
             headeri = csv.getHeaders();

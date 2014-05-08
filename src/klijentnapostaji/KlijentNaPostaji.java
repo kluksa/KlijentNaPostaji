@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -72,19 +73,27 @@ public class KlijentNaPostaji implements WrapperListener {
 //            log.log(Level.SEVERE, null, ex);
 //        }
         
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
+        sdf.setTimeZone(timeZone);
+
+        MLUFileListGenerator mfg = new MLUFileListGenerator();
+
+        CsvOmotnicaBuilder ob = new CsvOmotnicaBuilder();
+        ob.setDatoteka(mfg.getFileList(null, null)[0].getName());
+        ob.setIzvor("MLULogger");
+        ob.setPostaja("Slavonski brod 2");
+
         CsvFileTicker f = new CsvFileTicker();
         f.setServis(new PrihvatServisLocalImpl());
         f.setStupciSaVremenom(new Integer[]{0});
-        f.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        MLUFileListGenerator mfg = new MLUFileListGenerator();
+        f.setDateFormat(sdf);
         f.setFileListGen(mfg);
-        CsvOmotnicaBuilder ob = new CsvOmotnicaBuilder();
-        ob.setDatoteka(mfg.getFileList(null, null)[0].getName());
-        ob.setIzvor("Tece tece jedan slap");
-        ob.setPostaja("DHMZ");
         f.setCsvOBuilder(ob);
+        
         log.info("Pokretanje programa");
         f.run();
+        
 //        final Konfiguracija konfiguracija = new Konfiguracija();
 //        try {
 //            konfiguracija.validiraj();
@@ -122,7 +131,6 @@ public class KlijentNaPostaji implements WrapperListener {
         } else {
             WrapperManager.stop(0);
         }
-
     }
 
 //	private static void startTray() {
