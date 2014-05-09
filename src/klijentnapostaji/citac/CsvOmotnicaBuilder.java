@@ -20,6 +20,18 @@ public class CsvOmotnicaBuilder {
     private String datoteka;
     private String izvor;
     private String postaja;
+
+    public CsvOmotnicaBuilder() {
+    }
+
+    
+    
+    public CsvOmotnicaBuilder(String datoteka, String izvor, String postaja) {
+        this.datoteka = datoteka;
+        this.izvor = izvor;
+        this.postaja = postaja;
+    }
+    
     
     public CsvOmotnica create(String[] headers, List<String[]> linije){
         

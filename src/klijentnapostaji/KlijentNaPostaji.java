@@ -6,17 +6,14 @@
 package klijentnapostaji;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import klijentnapostaji.citac.CsvFileTicker;
-import klijentnapostaji.citac.CsvOmotnicaBuilder;
-import klijentnapostaji.citac.filelistgeneratori.MLUFileListGenerator;
-import klijentnapostaji.webservice.PrihvatServisLocalImpl;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.tanukisoftware.wrapper.WrapperListener;
 import org.tanukisoftware.wrapper.WrapperManager;
@@ -55,40 +52,14 @@ public class KlijentNaPostaji implements WrapperListener {
 
     @Override
     public Integer start(String[] strings) {
+        log.info("Pokretanje programa");
         try {
-            //        try {
-//            FileHandler fh = new FileHandler("klijent.log");
-//            fh.setFormatter(new SimpleFormatter());
-//            Logger.getLogger("").addHandler(fh);
-//            Logger.getLogger("").setLevel(Level.FINE);
-//
-//        } catch (IOException ex) {
-//            log.log(Level.SEVERE, null, ex);
-//        } catch (SecurityException ex) {
-//            log.log(Level.SEVERE, null, ex);
-//        }
-            XMLConfiguration config = new XMLConfiguration("/home/kraljevic/config.xml");
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            TimeZone timeZone = TimeZone.getTimeZone("UTC");
-            sdf.setTimeZone(timeZone);
-
-            MLUFileListGenerator mfg = new MLUFileListGenerator();
-
-            CsvOmotnicaBuilder ob = new CsvOmotnicaBuilder();
-            ob.setDatoteka(mfg.getFileList(null, null)[0].getName());
-            ob.setIzvor("MLULogger");
-            ob.setPostaja("Slavonski brod 2");
-
-            CsvFileTicker f = new CsvFileTicker();
-            f.setServis(new PrihvatServisLocalImpl());
-            f.setStupciSaVremenom(new Integer[]{0});
-            f.setDateFormat(sdf);
-            f.setFileListGen(mfg);
-            f.setCsvOBuilder(ob);
-
-            log.info("Pokretanje programa");
-            f.run();
+            Konfiguracija konfig = new Konfiguracija("/home/kraljevic/config.xml");
+            
+            for (CsvFileTicker f : konfig.getFileTickeri()){
+                
+                f.run();
+            }
         } catch (ConfigurationException ex) {
             log.log(Level.SEVERE, null, ex);
         }

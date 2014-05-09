@@ -15,12 +15,21 @@ import java.util.logging.Logger;
  *
  * @author kraljevic
  */
-public class MLUFileListGenerator implements FileListGenerator{
-    private static final Logger log = Logger.getLogger(MLUFileListGenerator.class.getName());
+public class MLULoggerFileListGenerator implements FileListGenerator{
+    private static final Logger log = Logger.getLogger(MLULoggerFileListGenerator.class.getName());
+    private  String baseName;
+
+    
+    
+    
+    @Override
+    public File[] getFileList(Date pocetak) {
+        return new File[]{new File("/home/kraljevic/tmp/20140430_153301_AH2G_00219_AH2G_00219_39252.csv")};
+    }
 
     @Override
-    public File[] getFileList(String basename, Date pocetak) {
-        return new File[]{new File("/home/kraljevic/tmp/20140430_153301_AH2G_00219_AH2G_00219_39252.csv")};
+    public void setBaseName(String baseName) {
+        this.baseName = baseName;
     }
 
 }

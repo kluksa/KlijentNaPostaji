@@ -34,13 +34,26 @@ public class CsvFileTicker implements Runnable {
     private CsvOmotnicaBuilder csvOBuilder;
     private Integer[] stupciSaVremenom;
     private DateFormat dateFormat;
-    private char separator = ';';
+    private char separator;
     private Charset chareset = Charset.forName("UTF-8");
 
     private String[] headeri;
     private List<String[]> linije;
     private int brojStupaca;
     private Date trenutnoVrijeme;
+
+    public CsvFileTicker() {
+    }
+
+    public CsvFileTicker(PrihvatServisLocalImpl servis, FileListGenerator fileListGen, CsvOmotnicaBuilder csvOBuilder, Integer[] stupciSaVremenom, DateFormat dateFormat, char separator) {
+        this.servis = servis;
+        this.fileListGen = fileListGen;
+        this.csvOBuilder = csvOBuilder;
+        this.stupciSaVremenom = stupciSaVremenom;
+        this.dateFormat = dateFormat;
+        this.separator = separator;
+    }
+
 
     public void setChareset(Charset chareset) {
         this.chareset = chareset;
@@ -68,7 +81,7 @@ public class CsvFileTicker implements Runnable {
         String str = "Ticker pokrenut";
         log.info(str);
         Date zadnji = servis.getVrijemeZadnjeg(str, str, str);
-        for (File datoteka : fileListGen.getFileList(str, start)) {
+        for (File datoteka : fileListGen.getFileList(zadnji)) {
             try {
                 procitaj(datoteka, zadnji);
                 CsvOmotnica create = csvOBuilder.create(headeri, linije);

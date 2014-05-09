@@ -14,5 +14,6 @@ import java.util.Date;
  * @author kraljevic
  */
 public interface FileListGenerator {
-    public File[] getFileList(String basename, Date pocetak);
+    public File[] getFileList(Date pocetak);
+    public void setBaseName(String baseName);
 }
