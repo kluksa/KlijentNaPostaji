@@ -62,6 +62,12 @@ public class KlijentNaPostaji implements WrapperListener {
             }
         } catch (ConfigurationException ex) {
             log.log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            log.log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            log.log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            log.log(Level.SEVERE, null, ex);
         }
 
 //        final Konfiguracija konfiguracija = new Konfiguracija();

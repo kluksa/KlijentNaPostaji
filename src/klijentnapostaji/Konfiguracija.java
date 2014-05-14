@@ -43,7 +43,8 @@ public class Konfiguracija {
         String oznakaPostaje = config.getString("postaja");
         for (HierarchicalConfiguration izvor : config.configurationsAt("izvor")) {
             String vrstaIzvora = izvor.getString("[@vrsta]");
-            String oznaka = izvor.getString("[@oznaka]");
+            
+            String oznakaIzvora = izvor.getString("[@oznaka]");
 
             for (HierarchicalConfiguration datoteka : izvor.configurationsAt("datoteka")) {
 
@@ -65,7 +66,7 @@ public class Konfiguracija {
                     oznakaDatoteke = name;
                 }
 
-                CsvOmotnicaBuilder csvOB = new CsvOmotnicaBuilder(oznakaDatoteke, oznaka, oznakaPostaje);
+                CsvOmotnicaBuilder csvOB = new CsvOmotnicaBuilder(oznakaDatoteke, oznakaIzvora, oznakaPostaje);
 
                 FileListGenerator flg = getFileListGenerator(vrstaIzvora, dirname, bname);
 
@@ -84,6 +85,7 @@ public class Konfiguracija {
         return tikeri;
     }
 
+       
     private DateFormat getDateFormat(HierarchicalConfiguration datoteka) {
         String format = datoteka.getString("vrijeme[@format]");
         String zona = datoteka.getString("vrijeme[@vremenska_zona]");
@@ -131,4 +133,57 @@ public class Konfiguracija {
         return servis;
     }
 
+    public Collection<CsvFileTicker> getFileTickeri2() throws ConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Collection<CsvFileTicker> tikeri = new ArrayList<>();
+        PrihvatServisLocalImpl servis = getWebServis();
+
+        String oznakaPostaje = config.getString("postaja");
+        for (HierarchicalConfiguration datoteka : config.configurationsAt("datoteke")) {
+            FileListGenerator flg = getFileListGenerator2(datoteka.configurationAt("ime"));
+            
+            
+            
+            String vrstaIzvora = izvor.getString("[@vrsta]");
+            
+            String oznakaIzvora = izvor.getString("[@oznaka]");
+
+
+
+
+
+
+                CsvOmotnicaBuilder csvOB = new CsvOmotnicaBuilder(oznakaDatoteke, oznakaIzvora, oznakaPostaje);
+
+                FileListGenerator flg = getFileListGenerator(vrstaIzvora, dirname, bname);
+
+                String separator = datoteka.getString("[@separator]");
+                if (separator == null) {
+                    separator = ",";
+                }
+
+                DateFormat df = getDateFormat(datoteka);
+                Integer[] stupciSaVremenom = getStupciSaVremenom(datoteka);
+
+                tikeri.add(new CsvFileTicker(servis, flg, csvOB,
+                        stupciSaVremenom, df, separator.charAt(0)));
+            }
+        }
+        return tikeri;
+
+    private FileListGenerator getFileListGenerator2(SubnodeConfiguration ime) {
+            Boolean rotacija = ime.getBoolean("rotacija");
+            String sufiks = ime.getString("sufiks");
+            String prefiks = ime.getString("prefiks");
+            String[] infiks = ime.getStringArray("infiks");
+            if (rotacija) {
+                
+            } else {
+                
+            }
+            return null;
+
+    }
+
+
+    
 }

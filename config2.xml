@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<konfiguracija>
+    <postaja>
+        <naziv>Slavonski Brod 2</naziv>
+        <oznaka_azo>RH0113</oznaka_azo>
+        <oznaka_dhmz>SLBR2</oznaka_dhmz>
+    </postaja>
+    <webservis>nema</webservis>
+    <datoteke>
+        <datoteka>
+            <ime rotacija="true">
+                <sufiks>a</sufiks>
+                <prefiks>b</prefis>
+                <infiks>1</infiks>
+                <infiks>2</infiks>
+                <infiks>3</infiks>
+                <infiks>4</infiks>
+            </ime>
+            <izvor>
+                <vrsta>MLULogger</vrsta>
+                <oznaka>AH2G_00219</oznaka>
+            </izvor>
+            <direktorij>/home/kraljevic/tmp</direktorij>
+            <vrijeme format="yyyy-MM-dd HH:mm:ss" time_zone="UTC">
+                <stupac>0</stupac>
+            </vrijeme>
+        </datoteka>
+    </datoteke>
+</konfiguracija>
