@@ -6,6 +6,7 @@
 package klijentnapostaji;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -55,13 +56,20 @@ public class KlijentNaPostaji implements WrapperListener {
         log.info("Pokretanje programa");
         try {
             Konfiguracija konfig = new Konfiguracija("/home/kraljevic/config.xml");
+            Collection<CsvFileTicker> tikeri = konfig.getFileTickeri();
             
-            for (CsvFileTicker f : konfig.getFileTickeri()){
+            for (CsvFileTicker f : tikeri){
                 
                 f.run();
             }
         } catch (ConfigurationException ex) {
             log.log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 //        final Konfiguracija konfiguracija = new Konfiguracija();

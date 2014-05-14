@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import klijentnapostaji.webservice.CsvOmotnica;
 import klijentnapostaji.webservice.StringArray;
+import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration.XMLConfiguration;
 
 /**
  *
@@ -20,6 +22,10 @@ public class CsvOmotnicaBuilder {
     private String datoteka;
     private String izvor;
     private String postaja;
+    
+    public static CsvOmotnicaBuilder getOmotnicaBuilderFromConfig(HierarchicalConfiguration conf){
+        return null;
+    }
 
     public CsvOmotnicaBuilder() {
     }

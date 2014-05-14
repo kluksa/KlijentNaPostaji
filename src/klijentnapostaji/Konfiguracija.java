@@ -66,7 +66,8 @@ public class Konfiguracija {
                 }
 
                 CsvOmotnicaBuilder csvOB = new CsvOmotnicaBuilder(oznakaDatoteke, oznaka, oznakaPostaje);
-
+                csvOB = CsvOmotnicaBuilder.getOmotnicaBuilderFromConfig(datoteka);
+                
                 FileListGenerator flg = getFileListGenerator(vrstaIzvora, dirname, bname);
 
                 String separator = datoteka.getString("[@separator]");
