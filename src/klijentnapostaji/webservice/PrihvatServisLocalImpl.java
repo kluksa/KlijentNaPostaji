@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 public class PrihvatServisLocalImpl {
     private static final Logger log = Logger.getLogger(PrihvatServisLocalImpl.class.getName());
     private final PrihvatSirovihPodataka pss;
+    private String url;
 
     public PrihvatServisLocalImpl() {
         pss = new PrihvatSirovihPodataka_Service().getPrihvatSirovihPodatakaPort();
@@ -38,6 +39,10 @@ public class PrihvatServisLocalImpl {
         } catch (CsvPrihvatException_Exception ex) {
             throw new PrihvatWSException(ex);
         }
+    }
+
+    public void setUrl(String string) {
+        this.url=string;
     }
     
 }

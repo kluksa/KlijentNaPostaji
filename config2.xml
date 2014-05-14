@@ -5,25 +5,33 @@
         <oznaka_azo>RH0113</oznaka_azo>
         <oznaka_dhmz>SLBR2</oznaka_dhmz>
     </postaja>
-    <webservis>nema</webservis>
+    <webservis>
+	nema
+    </webservis>
     <datoteke>
-        <datoteka>
-            <ime rotacija="true">
+        <datoteka oznaka="A" izvorid="1">
+            <putanja rotacija="true">
                 <sufiks>a</sufiks>
-                <prefiks>b</prefis>
+                <prefiks>b</prefiks>
                 <infiks>1</infiks>
                 <infiks>2</infiks>
                 <infiks>3</infiks>
                 <infiks>4</infiks>
-            </ime>
-            <izvor>
-                <vrsta>MLULogger</vrsta>
-                <oznaka>AH2G_00219</oznaka>
-            </izvor>
-            <direktorij>/home/kraljevic/tmp</direktorij>
-            <vrijeme format="yyyy-MM-dd HH:mm:ss" time_zone="UTC">
+            	<direktorij>/home/kraljevic/tmp</direktorij>
+            </putanja>
+	    <separator>;</separator>
+            <vrijeme>
+		<format>yyyy-MM-dd HH:mm:ss</format>
+		<zona>UTC</zona>
                 <stupac>0</stupac>
+                <stupac>1</stupac>
             </vrijeme>
         </datoteka>
     </datoteke>
+    <izvori>
+	<izvor id="1">
+            <vrsta>MLULogger</vrsta>
+	    <oznaka>AH2G_00219</oznaka>
+	</izvor>
+    </izvori>
 </konfiguracija>

@@ -35,6 +35,8 @@ public class Konfiguracija {
     public Konfiguracija(String konfigPath) throws ConfigurationException {
         config = new XMLConfiguration(konfigPath);
     }
+    
+
 
     public Collection<CsvFileTicker> getFileTickeri() throws ConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Collection<CsvFileTicker> tikeri = new ArrayList<>();
@@ -68,7 +70,6 @@ public class Konfiguracija {
 
                 CsvOmotnicaBuilder csvOB = new CsvOmotnicaBuilder(oznakaDatoteke, oznakaIzvora, oznakaPostaje);
 
->>>>>>> origin
                 FileListGenerator flg = getFileListGenerator(vrstaIzvora, dirname, bname);
 
                 String separator = datoteka.getString("[@separator]");
@@ -132,59 +133,5 @@ public class Konfiguracija {
             servis = new PrihvatServisLocalImpl();
         }
         return servis;
-    }
-
-    public Collection<CsvFileTicker> getFileTickeri2() throws ConfigurationException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Collection<CsvFileTicker> tikeri = new ArrayList<>();
-        PrihvatServisLocalImpl servis = getWebServis();
-
-        String oznakaPostaje = config.getString("postaja");
-        for (HierarchicalConfiguration datoteka : config.configurationsAt("datoteke")) {
-            FileListGenerator flg = getFileListGenerator2(datoteka.configurationAt("ime"));
-            
-            
-            
-            String vrstaIzvora = izvor.getString("[@vrsta]");
-            
-            String oznakaIzvora = izvor.getString("[@oznaka]");
-
-
-
-
-
-
-                CsvOmotnicaBuilder csvOB = new CsvOmotnicaBuilder(oznakaDatoteke, oznakaIzvora, oznakaPostaje);
-
-                FileListGenerator flg = getFileListGenerator(vrstaIzvora, dirname, bname);
-
-                String separator = datoteka.getString("[@separator]");
-                if (separator == null) {
-                    separator = ",";
-                }
-
-                DateFormat df = getDateFormat(datoteka);
-                Integer[] stupciSaVremenom = getStupciSaVremenom(datoteka);
-
-                tikeri.add(new CsvFileTicker(servis, flg, csvOB,
-                        stupciSaVremenom, df, separator.charAt(0)));
-            }
-        }
-        return tikeri;
-
-    private FileListGenerator getFileListGenerator2(SubnodeConfiguration ime) {
-            Boolean rotacija = ime.getBoolean("rotacija");
-            String sufiks = ime.getString("sufiks");
-            String prefiks = ime.getString("prefiks");
-            String[] infiks = ime.getStringArray("infiks");
-            if (rotacija) {
-                
-            } else {
-                
-            }
-            return null;
-
-    }
-
-
-    
+    }    
 }

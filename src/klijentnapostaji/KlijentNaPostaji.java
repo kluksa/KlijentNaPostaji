@@ -13,6 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import klijentnapostaji.citac.CsvFileTicker;
+import klijentnapostaji.webservice.PrihvatServisLocalImpl;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -56,8 +57,13 @@ public class KlijentNaPostaji implements WrapperListener {
         log.info("Pokretanje programa");
         try {
             Konfiguracija konfig = new Konfiguracija("/home/kraljevic/config.xml");
-            Collection<CsvFileTicker> tikeri = konfig.getFileTickeri();
+            Konfiguracija2 konfig2 = new Konfiguracija2("/home/kraljevic/NetBeansProjects/KlijentNaPostaji/config2.xml");
+
+            PrihvatServisLocalImpl servis = new PrihvatServisLocalImpl();
+            konfig2.config(servis);
             
+            Collection<CsvFileTicker> tikeri2 = konfig2.getFileTickeri();
+            Collection<CsvFileTicker> tikeri = konfig.getFileTickeri();
             for (CsvFileTicker f : tikeri){
                 
                 f.run();
