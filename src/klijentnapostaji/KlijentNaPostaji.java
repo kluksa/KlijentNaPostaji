@@ -65,11 +65,11 @@ public class KlijentNaPostaji implements WrapperListener {
         } catch (ConfigurationException ex) {
             log.log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         }
 
 //        final Konfiguracija konfiguracija = new Konfiguracija();
