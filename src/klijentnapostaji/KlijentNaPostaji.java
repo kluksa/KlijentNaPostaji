@@ -5,9 +5,16 @@
  */
 package klijentnapostaji;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.util.Collection;
-import java.util.List;
+import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
@@ -15,8 +22,6 @@ import java.util.logging.Logger;
 import klijentnapostaji.citac.CsvFileTicker;
 import klijentnapostaji.webservice.PrihvatServisLocalImpl;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
 import org.tanukisoftware.wrapper.WrapperListener;
 import org.tanukisoftware.wrapper.WrapperManager;
 
@@ -27,6 +32,20 @@ import org.tanukisoftware.wrapper.WrapperManager;
 public class KlijentNaPostaji implements WrapperListener {
 
     static final Logger log = Logger.getLogger(KlijentNaPostaji.class.getName());
+
+    private static void instaliraj() throws FileNotFoundException, IOException {
+        try (InputStream is = KlijentNaPostaji.class.getResourceAsStream("xml/config.xml"); 
+                OutputStream fos = new BufferedOutputStream(new FileOutputStream(new File("config.xml")))) {
+            int read = -1;
+
+            while ((read = is.read()) != -1) {
+                fos.write(read);
+            }
+
+            fos.flush();
+        }
+    }
+
     private final ScheduledExecutorService scheduler;
 
     public KlijentNaPostaji() {
@@ -38,11 +57,21 @@ public class KlijentNaPostaji implements WrapperListener {
     }
 
     /**
-     * @param args the command line arguments
+     * @param args the comma
+     * @throws java.io.IOException
+     * @throws java.io.IOExceptionnd line arguments
      */
     public static void main(String[] args) throws IOException, Exception {
 //        WrapperManager.start(new KlijentNaPostaji(), args);
-        new KlijentNaPostaji().start(args);
+
+        if (args.length == 1 && args[0].equals("--install")) {
+            instaliraj();
+        } if (args.length == 1 && args[0].equals("--test")) {
+            new KlijentNaPostaji().test();
+        } else {
+            new KlijentNaPostaji().start(args);
+        }
+
     }
 
     @Override
@@ -56,18 +85,16 @@ public class KlijentNaPostaji implements WrapperListener {
     public Integer start(String[] strings) {
         log.info("Pokretanje programa");
         try {
-            Konfiguracija konfig = new Konfiguracija("/home/kraljevic/config.xml");
-            Konfiguracija2 konfig2 = new Konfiguracija2("/home/kraljevic/NetBeansProjects/KlijentNaPostaji/config2.xml");
+            Konfiguracija konfig2 = new Konfiguracija("config.xml");
 
             PrihvatServisLocalImpl servis = new PrihvatServisLocalImpl();
             konfig2.config(servis);
-            
-            Collection<CsvFileTicker> tikeri2 = konfig2.getFileTickeri();
-            Collection<CsvFileTicker> tikeri = konfig.getFileTickeri();
-            for (CsvFileTicker f : tikeri){
-                
+
+            Collection<CsvFileTicker> tikeri = konfig2.getFileTickeri();
+            for (CsvFileTicker f : tikeri) {
                 f.run();
             }
+
         } catch (ConfigurationException ex) {
             log.log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -76,36 +103,28 @@ public class KlijentNaPostaji implements WrapperListener {
             log.log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             log.log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            log.log(Level.SEVERE, null, ex);
         }
-
-//        final Konfiguracija konfiguracija = new Konfiguracija();
-//        try {
-//            konfiguracija.validiraj();
-//            konfiguracija.procitaj();
-//            for (CsvFileTicker f : konfiguracija.getFileLista()) {
-//                log.info(f.toString());
-//                scheduler.scheduleAtFixedRate(f, 10, 600, TimeUnit.SECONDS);
-//            }
-//            log.info("Zavrsio pokretanje");
-//            return null;
-//        } catch (SQLException ex) {
-//            log.log(Level.SEVERE, null, ex);
-//            return -1;
-//        } catch (ParserConfigurationException ex) {
-//            log.log(Level.SEVERE, null, ex);
-//            return -2;
-//        } catch (SAXException ex) {
-//            log.log(Level.SEVERE, null, ex);
-//            return -3;
-//        } catch (IOException ex) {
-//            log.log(Level.SEVERE, null, ex);
-//            return -4;
-//        } catch (Exception ex) {
-//            log.log(Level.SEVERE, null, ex);
-//            return -666;
-//        }
         return 0;
     }
+    
+    private void test() {
+        try {
+            Konfiguracija konfig2 = new Konfiguracija("config.xml");
+
+            PrihvatServisLocalImpl servis = new PrihvatServisLocalImpl();
+            konfig2.config(servis);
+            
+            Date vrijemeZadnjeg = servis.getVrijemeZadnjeg(null, null, null);
+            System.out.println(vrijemeZadnjeg);
+        } catch (ConfigurationException ex) {
+            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
     @Override
     public void controlEvent(int event) {

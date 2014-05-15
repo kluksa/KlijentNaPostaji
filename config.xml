@@ -1,19 +1,36 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <konfiguracija>
-    <postaja>sbrod2</postaja>
-    <webservis>nema</webservis>
-	<izvor vrsta="MLULogger" oznaka="AH2G_00219">
-		<datoteka dirname="/home/kraljevic/tmp/" rotacija="true" separator=";">
-			<vrijeme format="yyyy-MM-dd HH:mm:ss" time_zone="UTC">
-				<stupac>0</stupac>
-			</vrijeme>
-		</datoteka>
-        <datoteka dirname="/home/kraljevic/tmp/" name="pj.csv" separator="," rotacija="false">
-            <vrijeme format="dd/MM/yyyy HH:mm z" >
-				<stupac>0</stupac>
-				<stupac>1</stupac>
-				<stupac>39</stupac>
-			</vrijeme>
-		</datoteka>
-	</izvor>
+    <postaja>
+        <naziv>Slavonski Brod 2</naziv>
+        <oznaka_azo>RH0113</oznaka_azo>
+        <oznaka_dhmz>SLBR2</oznaka_dhmz>
+    </postaja>
+    <webservis>
+    </webservis>
+    <datoteke>
+        <datoteka oznaka="A" izvorid="1">
+            <putanja rotacija="true">
+                <generator-klasa>klijentnapostaji.citac.filelistgeneratori.MLULoggerFileListGenerator</generator-klasa>
+                <element>1</element>
+                <element>2</element>
+                <element>3</element>
+                <element>4</element>
+                <direktorij>/home/kraljevic/tmp</direktorij>
+            </putanja>
+            <separator>;</separator>
+            <vrijeme>
+                <format>yyyy-MM-dd HH:mm:ss</format>
+                <zona>UTC</zona>
+                <stupac>0</stupac>
+                <stupac>1</stupac>
+            </vrijeme>
+        </datoteka>
+    </datoteke>
+    <izvori>
+        <izvor id="1">
+            <vrsta>MLULogger</vrsta>
+            <oznaka>AH2G_00219</oznaka>
+        </izvor>
+    </izvori>
 </konfiguracija>

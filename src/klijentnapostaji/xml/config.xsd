@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema version="1.0"
+           attributeFormDefault="unqualified" 
+           elementFormDefault="qualified" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="konfiguracija">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="postaja">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="naziv"/>
+              <xs:element type="xs:string" name="oznaka_azo"/>
+              <xs:element type="xs:string" name="oznaka_dhmz"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="webservis">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:anyURI" name="wsdl-url"/>
+              <xs:element name="qname">
+                <xs:annotation>
+                  <xs:documentation>&lt;prefix>&lt;/prefix></xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:anyURI" name="namespace-uri"/>
+                    <xs:element type="xs:string" name="lokalni-port"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datoteke">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="datoteka">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="putanja">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="generator-klasa"/>
+                          <xs:element type="xs:byte" name="element" maxOccurs="unbounded" minOccurs="0"/>
+                          <xs:element type="xs:string" name="direktorij"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="rotacija"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="separator"/>
+                    <xs:element name="vrijeme">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="format"/>
+                          <xs:element type="xs:string" name="zona"/>
+                          <xs:element type="xs:byte" name="stupac" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="oznaka"/>
+                  <xs:attribute type="xs:byte" name="izvorid"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="izvori">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="izvor">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="vrsta"/>
+                    <xs:element type="xs:string" name="oznaka"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:byte" name="id"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package klijentnapostaji.citac.exceptions;
-
 
 import java.util.logging.Logger;
 
@@ -14,6 +12,7 @@ import java.util.logging.Logger;
  * @author kraljevic
  */
 public class ParserException extends Exception {
+
     private static final Logger log = Logger.getLogger(ParserException.class.getName());
 
     public ParserException() {
@@ -31,5 +30,4 @@ public class ParserException extends Exception {
         super(cause);
     }
 
-    
 }

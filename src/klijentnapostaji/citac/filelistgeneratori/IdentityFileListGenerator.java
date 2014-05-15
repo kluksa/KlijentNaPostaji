@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package klijentnapostaji.citac.filelistgeneratori;
-
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -16,8 +15,10 @@ import java.util.logging.Logger;
  * @author kraljevic
  */
 public class IdentityFileListGenerator implements FileListGenerator {
+
     private static final Logger log = Logger.getLogger(IdentityFileListGenerator.class.getName());
     private String name;
+    private String path;
 
     @Override
     public File[] getFileList(Date pocetak) {
@@ -25,8 +26,12 @@ public class IdentityFileListGenerator implements FileListGenerator {
     }
 
     @Override
-    public void setBaseName(String name) {
-        this.name = name;
+    public void setElementiImena(String[] elementi) {
+        this.name = elementi[0];
     }
 
+    @Override
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

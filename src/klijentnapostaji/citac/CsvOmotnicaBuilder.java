@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package klijentnapostaji.citac;
 
 import java.util.ArrayList;
@@ -19,34 +18,32 @@ import org.apache.commons.configuration.XMLConfiguration;
  * @author kraljevic
  */
 public class CsvOmotnicaBuilder {
+
     private String datoteka;
     private String izvor;
     private String postaja;
-    
-    public static CsvOmotnicaBuilder getOmotnicaBuilderFromConfig(HierarchicalConfiguration conf){
+
+    public static CsvOmotnicaBuilder getOmotnicaBuilderFromConfig(HierarchicalConfiguration conf) {
         return null;
     }
 
     public CsvOmotnicaBuilder() {
     }
 
-    
-    
     public CsvOmotnicaBuilder(String datoteka, String izvor, String postaja) {
         this.datoteka = datoteka;
         this.izvor = izvor;
         this.postaja = postaja;
     }
-    
-    
-    public CsvOmotnica create(String[] headers, List<String[]> linije){
-        
+
+    public CsvOmotnica create(String[] headers, List<String[]> linije) {
+
         CsvOmotnica o = new CsvOmotnica();
         o.setDatoteka(datoteka);
         o.setIzvor(izvor);
         o.setPostaja(postaja);
         o.getHeaderi().addAll(Arrays.asList(headers));
-        for ( String[] ss : linije) {
+        for (String[] ss : linije) {
             StringArray sa = new StringArray();
             sa.getItem().addAll(Arrays.asList(ss));
             o.getLinije().add(sa);

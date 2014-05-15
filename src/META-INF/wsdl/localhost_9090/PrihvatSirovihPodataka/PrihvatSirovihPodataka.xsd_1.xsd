@@ -12,20 +12,6 @@
 
 <xs:element name="prebaciOmotnicuResponse" type="tns:prebaciOmotnicuResponse"/>
 
-<xs:complexType name="getUnixTimeZadnjeg">
-<xs:sequence>
-<xs:element name="izvor" type="xs:string" minOccurs="0"/>
-<xs:element name="postaja" type="xs:string" minOccurs="0"/>
-<xs:element name="datoteka" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="getUnixTimeZadnjegResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:long" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="prebaciOmotnicu">
 <xs:sequence>
 <xs:element name="omotnica" type="tns:csvOmotnica" minOccurs="0"/>
@@ -49,6 +35,20 @@
 <xs:complexType name="CsvPrihvatException">
 <xs:sequence>
 <xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getUnixTimeZadnjeg">
+<xs:sequence>
+<xs:element name="izvor" type="xs:string" minOccurs="0"/>
+<xs:element name="postaja" type="xs:string" minOccurs="0"/>
+<xs:element name="datoteka" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getUnixTimeZadnjegResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
