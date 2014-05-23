@@ -15,11 +15,13 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import klijentnapostaji.citac.CsvFileTicker;
+import klijentnapostaji.citac.exceptions.PrihvatWSException;
 import klijentnapostaji.webservice.PrihvatServisLocalImpl;
 import org.apache.commons.configuration.ConfigurationException;
 import org.tanukisoftware.wrapper.WrapperListener;
@@ -89,6 +91,8 @@ public class KlijentNaPostaji implements WrapperListener {
 
             PrihvatServisLocalImpl servis = new PrihvatServisLocalImpl();
             konfig2.config(servis);
+            
+            
 
             Collection<CsvFileTicker> tikeri = konfig2.getFileTickeri();
             for (CsvFileTicker f : tikeri) {
@@ -110,17 +114,31 @@ public class KlijentNaPostaji implements WrapperListener {
     }
     
     private void test() {
+        Properties prop = System.getProperties();
+        prop.put("javax.net.ssl.trustStore","truststore");
+        prop.put("javax.net.ssl.trustStorePassword", "pasvord@store");
+        prop.put("javax.net.ssl.keyStore","keystore.jks");
+        prop.put("javax.net.ssl.keyStorePassword", "changeit");
+        System.setProperties(prop);
         try {
             Konfiguracija konfig2 = new Konfiguracija("config.xml");
 
             PrihvatServisLocalImpl servis = new PrihvatServisLocalImpl();
             konfig2.config(servis);
-            
+            String str = "Orao javi se, orao javi se, prijem.";
+            String out  = servis.test(str);
+            log.log(Level.INFO,str);
+            log.log(Level.INFO,out);
+//            String odgovor = servis.t
+                    
+                    
             Date vrijemeZadnjeg = servis.getVrijemeZadnjeg(null, null, null);
             System.out.println(vrijemeZadnjeg);
         } catch (ConfigurationException ex) {
             Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
+            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PrihvatWSException ex) {
             Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -6,4 +6,12 @@
     <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?wsdl" uri="wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.wsdl"/>
     <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?xsd=1" uri="wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.xsd_1.xsd"/>
     <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?xsd=2" uri="wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.xsd_2.xsd"/>
+    <system systemId="http://localhost:9090/NewWebService/NewWebService?wsdl" uri="wsdl/localhost_9090/NewWebService/NewWebService.wsdl"/>
+    <system systemId="http://localhost:9090/NewWebService/NewWebService?xsd=1" uri="wsdl/localhost_9090/NewWebService/NewWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka2?wsdl" uri="wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka2.wsdl"/>
+    <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka2?xsd=1" uri="wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka2.xsd_1.xsd"/>
+    <system systemId="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka2?xsd=2" uri="wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka2.xsd_2.xsd"/>
+    <system systemId="http://localhost:9090/PrihvatPodataka/PrihvatPodataka?wsdl" uri="wsdl/localhost_9090/PrihvatPodataka/PrihvatPodataka.wsdl"/>
+    <system systemId="http://localhost:9090/PrihvatPodataka/PrihvatPodataka?xsd=1" uri="wsdl/localhost_9090/PrihvatPodataka/PrihvatPodataka.xsd_1.xsd"/>
+    <system systemId="http://localhost:9090/PrihvatPodataka/PrihvatPodataka?xsd=2" uri="wsdl/localhost_9090/PrihvatPodataka/PrihvatPodataka.xsd_2.xsd"/>
 </catalog>

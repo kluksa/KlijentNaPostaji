@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://webservis.skz.dhz/" xmlns:ns1="http://jaxb.dev.java.net/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservis.skz.dhz/">
 
-<xs:import namespace="http://jaxb.dev.java.net/array" schemaLocation="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?xsd=2"/>
+<xs:import namespace="http://jaxb.dev.java.net/array" schemaLocation="http://localhost:9090/PrihvatPodataka/PrihvatPodataka?xsd=2"/>
 
 <xs:element name="CsvPrihvatException" type="tns:CsvPrihvatException"/>
 
@@ -8,9 +8,31 @@
 
 <xs:element name="getUnixTimeZadnjegResponse" type="tns:getUnixTimeZadnjegResponse"/>
 
+<xs:element name="hello" type="tns:hello"/>
+
+<xs:element name="helloResponse" type="tns:helloResponse"/>
+
 <xs:element name="prebaciOmotnicu" type="tns:prebaciOmotnicu"/>
 
 <xs:element name="prebaciOmotnicuResponse" type="tns:prebaciOmotnicuResponse"/>
+
+<xs:element name="testWS" type="tns:testWS"/>
+
+<xs:element name="testWSResponse" type="tns:testWSResponse"/>
+
+<xs:complexType name="getUnixTimeZadnjeg">
+<xs:sequence>
+<xs:element name="izvor" type="xs:string" minOccurs="0"/>
+<xs:element name="postaja" type="xs:string" minOccurs="0"/>
+<xs:element name="datoteka" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getUnixTimeZadnjegResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
 
 <xs:complexType name="prebaciOmotnicu">
 <xs:sequence>
@@ -38,17 +60,27 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getUnixTimeZadnjeg">
+<xs:complexType name="testWS">
 <xs:sequence>
-<xs:element name="izvor" type="xs:string" minOccurs="0"/>
-<xs:element name="postaja" type="xs:string" minOccurs="0"/>
-<xs:element name="datoteka" type="xs:string" minOccurs="0"/>
+<xs:element name="inStr" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getUnixTimeZadnjegResponse">
+<xs:complexType name="testWSResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:long" minOccurs="0"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

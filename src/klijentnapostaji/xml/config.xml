@@ -15,7 +15,8 @@
         </qname>
     </webservis>
     <datoteke>
-        <datoteka oznaka="A" izvorid="1">
+        <datoteka oznaka="A" izvorid="1" csheduler="cron">
+            <cron-string>3 * * * *<cron-string>
             <putanja rotacija="true">
                 <generator-klasa>klijentnapostaji.citac.filelistgeneratori.MLULoggerFileListGenerator</generator-klasa>
                 <element>1</element>
@@ -32,6 +33,25 @@
                 <stupac>1</stupac>
             </vrijeme>
         </datoteka>
+        <datoteka oznaka="B" izvorid="1" csheduler="fixed">
+            <schedule interval="10" jedinica="minuta" />
+            <putanja rotacija="true">
+                <generator-klasa>klijentnapostaji.citac.filelistgeneratori.MLULoggerFileListGenerator</generator-klasa>
+                <element>1</element>
+                <element>2</element>
+                <element>3</element>
+                <element>4</element>
+                <direktorij>/home/kraljevic/tmp</direktorij>
+            </putanja>
+            <separator>;</separator>
+            <vrijeme>
+                <format>yyyy-MM-dd HH:mm:ss</format>
+                <zona>UTC</zona>
+                <stupac>0</stupac>
+                <stupac>1</stupac>
+            </vrijeme>
+        </datoteka>
+
     </datoteke>
     <izvori>
         <izvor id="1">

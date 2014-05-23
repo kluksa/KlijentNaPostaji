@@ -18,22 +18,22 @@ import klijentnapostaji.citac.exceptions.PrihvatWSException;
 public class PrihvatServisLocalImpl {
 
     private static final Logger log = Logger.getLogger(PrihvatServisLocalImpl.class.getName());
-    private PrihvatSirovihPodataka pss;
+    private PrihvatPodataka pss;
     private QName qname;
     private URL wsdlurl;
 
     public void init() {
-        PrihvatSirovihPodataka_Service s;
+        PrihvatPodataka_Service s;
         if (wsdlurl != null) {
             if (qname == null) {
-                s = new PrihvatSirovihPodataka_Service(wsdlurl);
+                s = new PrihvatPodataka_Service(wsdlurl);
             } else {
-                s = new PrihvatSirovihPodataka_Service(wsdlurl, qname);
+                s = new PrihvatPodataka_Service(wsdlurl, qname);
             }
         } else {
-            s = new PrihvatSirovihPodataka_Service();
+            s = new PrihvatPodataka_Service();
         }
-        pss = s.getPrihvatSirovihPodatakaPort();
+        pss = s.getPrihvatPodatakaPort();
     }
 
     public Date getVrijemeZadnjeg(String str, String str0, String str1) {
@@ -48,6 +48,14 @@ public class PrihvatServisLocalImpl {
             throw new PrihvatWSException(ex);
         }
     }
+    
+    public String test(String str) throws PrihvatWSException{
+        try {
+            return pss.testWS(str);
+        } catch (CsvPrihvatException_Exception ex) {
+            throw new PrihvatWSException(ex);
+        }
+    }
 
     public void setWsdlUrl(URL string) {
         this.wsdlurl = string;
@@ -55,5 +63,11 @@ public class PrihvatServisLocalImpl {
 
     public void setQname(QName qname) {
         this.qname = qname;
+    }
+
+    private static Long getUnixTimeZadnjeg(java.lang.String izvor, java.lang.String postaja, java.lang.String datoteka) {
+        klijentnapostaji.webservice.PrihvatPodataka_Service service = new klijentnapostaji.webservice.PrihvatPodataka_Service();
+        klijentnapostaji.webservice.PrihvatPodataka port = service.getPrihvatPodatakaPort();
+        return port.getUnixTimeZadnjeg(izvor, postaja, datoteka);
     }
 }

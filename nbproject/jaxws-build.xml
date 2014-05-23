@@ -16,22 +16,22 @@
             <classpath path="${libs.jaxws21.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsimport-client-PrihvatSirovihPodataka" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka"/>
-        <property name="wsdl-PrihvatSirovihPodataka" location="xml-resources/web-service-references/PrihvatSirovihPodataka/wsdl/localhost_9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka" destdir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka" wsdl="${wsdl-PrihvatSirovihPodataka}" catalog="catalog.xml" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:9090/PrihvatSirovihPodataka/PrihvatSirovihPodataka?wsdl" xnocompile="true" xendorsed="true" package="klijentnapostaji.webservice">
-            <depends file="${wsdl-PrihvatSirovihPodataka}"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka"/>
+    <target name="wsimport-client-PrihvatPodataka" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/PrihvatPodataka"/>
+        <property name="wsdl-PrihvatPodataka" location="xml-resources/web-service-references/PrihvatPodataka/wsdl/localhost_9090/PrihvatPodataka/PrihvatPodataka.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PrihvatPodataka" destdir="${build.generated.dir}/jax-wsCache/PrihvatPodataka" wsdl="${wsdl-PrihvatPodataka}" catalog="catalog.xml" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:9090/PrihvatPodataka/PrihvatPodataka?wsdl" xnocompile="true" xendorsed="true" package="klijentnapostaji.webservice">
+            <depends file="${wsdl-PrihvatPodataka}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/PrihvatPodataka"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka">
+            <fileset dir="${build.generated.dir}/jax-wsCache/PrihvatPodataka">
                 <include name="**/*.java"/>
             </fileset>
         </copy>
     </target>
-    <target name="wsimport-client-clean-PrihvatSirovihPodataka" depends="-init-project">
-        <delete dir="${build.generated.dir}/jax-wsCache/PrihvatSirovihPodataka"/>
+    <target name="wsimport-client-clean-PrihvatPodataka" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/PrihvatPodataka"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/klijentnapostaji/webservice"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-PrihvatSirovihPodataka"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-PrihvatPodataka"/>
 </project>
