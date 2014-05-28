@@ -43,25 +43,6 @@
 
 <wsam:Addressing/>
 </wsp:Policy>
-<wsp:Policy xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" wsu:Id="PrihvatPodatakaPortBinding_hello_Input_Policy">
-<sp:EncryptedParts>
-<sp:Body/>
-</sp:EncryptedParts>
-<sp:SignedParts>
-<sp:Body/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="ReplyTo"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="To"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="From"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="AckRequested"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="CreateSequence"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="Sequence"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="MessageID"/>
-<sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="SequenceAcknowledgement"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="Action"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="RelatesTo"/>
-</sp:SignedParts>
-</wsp:Policy>
 <wsp:Policy xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" wsu:Id="PrihvatPodatakaPortBinding_prebaciOmotnicu_Input_Policy">
 <sp:EncryptedParts>
 <sp:Body/>
@@ -82,25 +63,6 @@
 </sp:SignedParts>
 </wsp:Policy>
 <wsp:Policy xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" wsu:Id="PrihvatPodatakaPortBinding_testWS_Input_Policy">
-<sp:EncryptedParts>
-<sp:Body/>
-</sp:EncryptedParts>
-<sp:SignedParts>
-<sp:Body/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="ReplyTo"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="To"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="From"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="AckRequested"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="CreateSequence"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="Sequence"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="MessageID"/>
-<sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
-<sp:Header Namespace="http://docs.oasis-open.org/ws-rx/wsrm/200702" Name="SequenceAcknowledgement"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="Action"/>
-<sp:Header Namespace="http://www.w3.org/2005/08/addressing" Name="RelatesTo"/>
-</sp:SignedParts>
-</wsp:Policy>
-<wsp:Policy xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" wsu:Id="PrihvatPodatakaPortBinding_hello_Output_Policy">
 <sp:EncryptedParts>
 <sp:Body/>
 </sp:EncryptedParts>
@@ -165,26 +127,14 @@
 <xsd:import namespace="http://jaxb.dev.java.net/array" schemaLocation="http://localhost:9090/PrihvatPodataka/PrihvatPodataka?xsd=2"/>
 </xsd:schema>
 </types>
-<message name="hello">
-<part name="parameters" element="tns:hello"/>
-</message>
-<message name="helloResponse">
-<part name="parameters" element="tns:helloResponse"/>
-</message>
-<message name="testWS">
-<part name="parameters" element="tns:testWS"/>
-</message>
-<message name="testWSResponse">
-<part name="parameters" element="tns:testWSResponse"/>
-</message>
-<message name="CsvPrihvatException">
-<part name="fault" element="tns:CsvPrihvatException"/>
-</message>
 <message name="prebaciOmotnicu">
 <part name="parameters" element="tns:prebaciOmotnicu"/>
 </message>
 <message name="prebaciOmotnicuResponse">
 <part name="parameters" element="tns:prebaciOmotnicuResponse"/>
+</message>
+<message name="CsvPrihvatException">
+<part name="fault" element="tns:CsvPrihvatException"/>
 </message>
 <message name="getUnixTimeZadnjeg">
 <part name="parameters" element="tns:getUnixTimeZadnjeg"/>
@@ -192,16 +142,13 @@
 <message name="getUnixTimeZadnjegResponse">
 <part name="parameters" element="tns:getUnixTimeZadnjegResponse"/>
 </message>
+<message name="testWS">
+<part name="parameters" element="tns:testWS"/>
+</message>
+<message name="testWSResponse">
+<part name="parameters" element="tns:testWSResponse"/>
+</message>
 <portType name="PrihvatPodataka">
-<operation name="hello">
-<input wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/helloRequest" message="tns:hello"/>
-<output wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/helloResponse" message="tns:helloResponse"/>
-</operation>
-<operation name="testWS">
-<input wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/testWSRequest" message="tns:testWS"/>
-<output wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/testWSResponse" message="tns:testWSResponse"/>
-<fault message="tns:CsvPrihvatException" name="CsvPrihvatException" wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/testWS/Fault/CsvPrihvatException"/>
-</operation>
 <operation name="prebaciOmotnicu">
 <input wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/prebaciOmotnicuRequest" message="tns:prebaciOmotnicu"/>
 <output wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/prebaciOmotnicuResponse" message="tns:prebaciOmotnicuResponse"/>
@@ -211,35 +158,15 @@
 <input wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/getUnixTimeZadnjegRequest" message="tns:getUnixTimeZadnjeg"/>
 <output wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/getUnixTimeZadnjegResponse" message="tns:getUnixTimeZadnjegResponse"/>
 </operation>
+<operation name="testWS">
+<input wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/testWSRequest" message="tns:testWS"/>
+<output wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/testWSResponse" message="tns:testWSResponse"/>
+<fault message="tns:CsvPrihvatException" name="CsvPrihvatException" wsam:Action="http://webservis.skz.dhz/PrihvatPodataka/testWS/Fault/CsvPrihvatException"/>
+</operation>
 </portType>
 <binding name="PrihvatPodatakaPortBinding" type="tns:PrihvatPodataka">
 <wsp:PolicyReference URI="#PrihvatPodatakaPortBindingPolicy"/>
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="hello">
-<soap:operation soapAction=""/>
-<input>
-<wsp:PolicyReference URI="#PrihvatPodatakaPortBinding_hello_Input_Policy"/>
-<soap:body use="literal"/>
-</input>
-<output>
-<wsp:PolicyReference URI="#PrihvatPodatakaPortBinding_hello_Output_Policy"/>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="testWS">
-<soap:operation soapAction=""/>
-<input>
-<wsp:PolicyReference URI="#PrihvatPodatakaPortBinding_testWS_Input_Policy"/>
-<soap:body use="literal"/>
-</input>
-<output>
-<wsp:PolicyReference URI="#PrihvatPodatakaPortBinding_testWS_Output_Policy"/>
-<soap:body use="literal"/>
-</output>
-<fault name="CsvPrihvatException">
-<soap:fault name="CsvPrihvatException" use="literal"/>
-</fault>
-</operation>
 <operation name="prebaciOmotnicu">
 <soap:operation soapAction=""/>
 <input>
@@ -262,6 +189,20 @@
 <output>
 <soap:body use="literal"/>
 </output>
+</operation>
+<operation name="testWS">
+<soap:operation soapAction=""/>
+<input>
+<wsp:PolicyReference URI="#PrihvatPodatakaPortBinding_testWS_Input_Policy"/>
+<soap:body use="literal"/>
+</input>
+<output>
+<wsp:PolicyReference URI="#PrihvatPodatakaPortBinding_testWS_Output_Policy"/>
+<soap:body use="literal"/>
+</output>
+<fault name="CsvPrihvatException">
+<soap:fault name="CsvPrihvatException" use="literal"/>
+</fault>
 </operation>
 </binding>
 <service name="PrihvatPodataka">

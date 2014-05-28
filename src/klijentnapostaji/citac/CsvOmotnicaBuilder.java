@@ -36,7 +36,7 @@ public class CsvOmotnicaBuilder {
         this.postaja = postaja;
     }
 
-    public CsvOmotnica create(String[] headers, List<String[]> linije) {
+    public CsvOmotnica create(String[] headers, List<String[]> linije, List<Long> vremena) {
 
         CsvOmotnica o = new CsvOmotnica();
         o.setDatoteka(datoteka);
@@ -48,6 +48,7 @@ public class CsvOmotnicaBuilder {
             sa.getItem().addAll(Arrays.asList(ss));
             o.getLinije().add(sa);
         }
+        o.getVremena().addAll(vremena);
         return o;
     }
 

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Properties;
@@ -87,6 +88,7 @@ public class KlijentNaPostaji implements WrapperListener {
     public Integer start(String[] strings) {
         log.info("Pokretanje programa");
         try {
+            URL resource = this.getClass().getResource("config.xml");
             Konfiguracija konfig2 = new Konfiguracija("config.xml");
 
             PrihvatServisLocalImpl servis = new PrihvatServisLocalImpl();
@@ -96,6 +98,7 @@ public class KlijentNaPostaji implements WrapperListener {
 
             Collection<CsvFileTicker> tikeri = konfig2.getFileTickeri();
             for (CsvFileTicker f : tikeri) {
+                f.setServis(servis);
                 f.run();
             }
 
@@ -132,8 +135,8 @@ public class KlijentNaPostaji implements WrapperListener {
 //            String odgovor = servis.t
                     
                     
-            Date vrijemeZadnjeg = servis.getVrijemeZadnjeg(null, null, null);
-            System.out.println(vrijemeZadnjeg);
+//            Date vrijemeZadnjeg = servis.getVrijemeZadnjeg(null, null, null);
+//            System.out.println(vrijemeZadnjeg);
         } catch (ConfigurationException ex) {
             Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {

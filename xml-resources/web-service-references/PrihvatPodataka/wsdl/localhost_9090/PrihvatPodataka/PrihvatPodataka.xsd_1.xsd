@@ -8,10 +8,6 @@
 
 <xs:element name="getUnixTimeZadnjegResponse" type="tns:getUnixTimeZadnjegResponse"/>
 
-<xs:element name="hello" type="tns:hello"/>
-
-<xs:element name="helloResponse" type="tns:helloResponse"/>
-
 <xs:element name="prebaciOmotnicu" type="tns:prebaciOmotnicu"/>
 
 <xs:element name="prebaciOmotnicuResponse" type="tns:prebaciOmotnicuResponse"/>
@@ -47,6 +43,7 @@
 <xs:element name="izvor" type="xs:string" minOccurs="0"/>
 <xs:element name="linije" type="ns1:stringArray" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="postaja" type="xs:string" minOccurs="0"/>
+<xs:element name="vremena" type="xs:long" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -67,18 +64,6 @@
 </xs:complexType>
 
 <xs:complexType name="testWSResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="hello">
-<xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="helloResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

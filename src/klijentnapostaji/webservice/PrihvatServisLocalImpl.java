@@ -37,7 +37,7 @@ public class PrihvatServisLocalImpl {
     }
 
     public Date getVrijemeZadnjeg(String str, String str0, String str1) {
-        Long vrijemeZadnjeg = pss.getUnixTimeZadnjeg(str, str1, str1);
+        Long vrijemeZadnjeg = pss.getUnixTimeZadnjeg(str, str0, str1);
         return new Date(vrijemeZadnjeg);
     }
 

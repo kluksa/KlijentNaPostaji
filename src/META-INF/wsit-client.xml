@@ -5,6 +5,5 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="mainclientconfig" 
 >
-    <import location="PrihvatSirovihPodataka.xml" namespace="http://webservis.skz.dhz/"/>
     <import location="PrihvatPodataka.xml" namespace="http://webservis.skz.dhz/"/>
 </definitions>

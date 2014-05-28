@@ -39,6 +39,7 @@ public class CsvFileTicker implements Runnable {
 
     private String[] headeri;
     private List<String[]> linije;
+    private List<Long> vremena;
     private int brojStupaca;
     private Date trenutnoVrijeme;
 
@@ -79,11 +80,11 @@ public class CsvFileTicker implements Runnable {
         final Date start = new Date();
         String str = "Ticker pokrenut";
         log.info(str);
-        Date zadnji = servis.getVrijemeZadnjeg(str, str, str);
+        Date zadnji = servis.getVrijemeZadnjeg(csvOBuilder.getIzvor(), csvOBuilder.getPostaja(), csvOBuilder.getDatoteka());
         for (File datoteka : fileListGen.getFileList(zadnji)) {
             try {
                 procitaj(datoteka, zadnji);
-                CsvOmotnica create = csvOBuilder.create(headeri, linije);
+                CsvOmotnica create = csvOBuilder.create(headeri, linije, vremena);
                 servis.prebaciOmotnicu(create);
             } catch (IOException ex) {
                 log.log(Level.SEVERE, null, ex);
@@ -110,6 +111,7 @@ public class CsvFileTicker implements Runnable {
             brojStupaca = csv.getHeaderCount();
             headeri = csv.getHeaders();
             linije = new ArrayList<>();
+            vremena = new ArrayList<>();
 
             while (csv.readRecord()) {
                 int nc = csv.getColumnCount();
@@ -119,6 +121,7 @@ public class CsvFileTicker implements Runnable {
                 }
                 trenutnoVrijeme = getVrijeme(csv);
                 if (trenutnoVrijeme.after(zadnji)) {
+                    vremena.add(trenutnoVrijeme.getTime());
                     linije.add(csv.getValues());
                 }
             }
