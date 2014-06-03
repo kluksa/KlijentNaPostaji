@@ -108,8 +108,8 @@
     <wsp:Policy wsu:Id="PrihvatPodatakaPortBindingPolicy">
         <wsp:ExactlyOne>
             <wsp:All>
-                <sc:KeyStore wspp:visibility="private" type="JKS" storepass="changeit" alias="xws-security-client" location="/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/keystore.jks"/>
-                <sc:TrustStore wspp:visibility="private" type="JKS" storepass="changeit" peeralias="xws-security-server" location="/home/kraljevic/opt/glassfish4/glassfish/domains/likz/config/cacerts.jks"/>
+                <sc:KeyStore wspp:visibility="private" type="JKS" storepass="changeit" alias="xws-security-client" location="/home/kraljevic/opt/glassfish4/glassfish/domains/likz/config/keystore.jks"/>
+                <sc:TrustStore wspp:visibility="private" type="JKS" storepass="pasvord@klijent" peeralias="xws-security-server" location="/home/kraljevic/razvoj/NetBeansProjects/KlijentNaPostaji/truststore.jks"/>
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>

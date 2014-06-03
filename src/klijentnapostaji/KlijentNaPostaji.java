@@ -54,9 +54,9 @@ public class KlijentNaPostaji implements WrapperListener {
     public KlijentNaPostaji() {
         scheduler = Executors.newScheduledThreadPool(1);
 //        System.setProperty("javax.net.ssl.trustStore", "truststore");
-//        System.setProperty("javax.net.ssl.trustStorePassword", "pasvord");
-//        System.setProperty("javax.net.ssl.keyStore", "klijent_keystore");
-//        System.setProperty("javax.net.ssl.keyStorePassword", "pasvord");
+//        System.setProperty("javax.net.ssl.trustStorePassword", "pasvord@klijent");
+//        System.setProperty("javax.net.ssl.keyStore", "keystore");
+//        System.setProperty("javax.net.ssl.keyStorePassword", "pasvord@klijent");
     }
 
     /**
@@ -117,12 +117,12 @@ public class KlijentNaPostaji implements WrapperListener {
     }
     
     private void test() {
-        Properties prop = System.getProperties();
-        prop.put("javax.net.ssl.trustStore","truststore");
-        prop.put("javax.net.ssl.trustStorePassword", "pasvord@store");
-        prop.put("javax.net.ssl.keyStore","keystore.jks");
-        prop.put("javax.net.ssl.keyStorePassword", "changeit");
-        System.setProperties(prop);
+//        Properties prop = System.getProperties();
+//        prop.put("javax.net.ssl.trustStore","truststore.jks");
+//        prop.put("javax.net.ssl.trustStorePassword", "pasvord@klijent");
+//        prop.put("javax.net.ssl.keyStore","keystore.jks");
+//        prop.put("javax.net.ssl.keyStorePassword", "pasvord@klijent");
+//        System.setProperties(prop);
         try {
             Konfiguracija konfig2 = new Konfiguracija("config.xml");
 
