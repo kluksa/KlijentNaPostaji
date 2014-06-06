@@ -119,6 +119,7 @@ public class Konfiguracija {
         FileListGenerator flg = (FileListGenerator) klasa.newInstance();
         String dir = putanja.getString("direktorij");
         String[] stringArray = putanja.getStringArray("element");
+        flg.setPath(dir);
         flg.setElementiImena(stringArray);
         return flg;
     }

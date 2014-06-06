@@ -19,10 +19,12 @@
             <cron-string>3 * * * *</cron-string>
             <putanja rotacija="true">
                 <generator-klasa>klijentnapostaji.citac.filelistgeneratori.MLULoggerFileListGenerator</generator-klasa>
-                <element>1</element>
-                <element>2</element>
-                <element>3</element>
-                <element>4</element>
+                <element vrsta="datum">[0-9]{8}</element>
+                <element vrsta="vrijeme">[0-9]{6}</element>
+                <element vrsta="static">AH2G_00219</element>
+                <element vrsta="static">AH2G_00219</element>
+                <element vrsta="random">[0-9]{5}</element>
+                <element vrsta="ekstenzija">csv</element>
                 <direktorij>/home/kraljevic/tmp</direktorij>
             </putanja>
             <separator>;</separator>
