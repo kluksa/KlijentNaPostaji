@@ -92,6 +92,7 @@ public class Konfiguracija {
         CsvOmotnicaBuilder cob = new CsvOmotnicaBuilder();
         config(cob, datoteka);
         tik.setCsvOBuilder(cob);
+        tik.setSchedulerStr(datoteka.getString("cron-string"));
         tik.setDateFormat(getDateFormat(datoteka.configurationAt("vrijeme")));
         tik.setFileListGen(getFileListGenerator(datoteka.configurationAt("putanja")));
         tik.setSeparator(datoteka.getString("separator").charAt(0));

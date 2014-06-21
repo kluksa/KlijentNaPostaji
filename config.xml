@@ -7,7 +7,7 @@
         <oznaka_dhmz>TEST1</oznaka_dhmz>
     </postaja>
     <webservis>
-        <wsdl-url>http://localhost:9090/PrihvatPodataka/PrihvatPodataka?wsdl</wsdl-url>
+        <wsdl-url>http://172.20.1.166:9090/PrihvatPodataka/PrihvatPodataka?wsdl</wsdl-url>
         <qname>
             <namespace-uri>http://webservis.skz.dhz/</namespace-uri>
             <lokalni-port>PrihvatPodataka</lokalni-port>
@@ -19,11 +19,11 @@
             <cron-string>3 * * * *</cron-string>
             <putanja rotacija="true">
                 <generator-klasa>klijentnapostaji.citac.filelistgeneratori.MLULoggerFileListGenerator</generator-klasa>
-                <element vrsta="datum">[0-9]{8}</element>
-                <element vrsta="vrijeme">[0-9]{6}</element>
+                <element vrsta="datum">20[0-9][0-9][0-1][0-9][0-3][0-9]</element>
+                <element vrsta="vrijeme">[0-2][0-9][0-5][0-9][0-5][0-9]</element>
                 <element vrsta="static">AH2G_00219</element>
                 <element vrsta="static">AH2G_00219</element>
-                <element vrsta="random">[0-9]{5}</element>
+                <element vrsta="random">[0-9][0-9][0-9][0-9][0-9]</element>
                 <element vrsta="ekstenzija">csv</element>
                 <direktorij>/home/kraljevic/tmp</direktorij>
             </putanja>

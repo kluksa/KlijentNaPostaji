@@ -34,17 +34,23 @@ public class MLULoggerFileListGenerator implements FileListGenerator {
     private String path;
     private String[] elementi;
     private Date pocetak;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-    private TimeZone timeZone = TimeZone.getTimeZone("UTC");
-    
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+    private final TimeZone timeZone = TimeZone.getTimeZone("UTC");
+
     @Override
     public File[] getFileList(Date pocetak) {
         this.pocetak = pocetak;
-        
-        
-        List<String> fileList = fileList(path);
 
-        return new File[]{new File("/home/kraljevic/tmp/20140430_153301_AH2G_00219_AH2G_00219_39252.csv")};
+        List<File> fileList = fileList(path);
+        
+        return fileList.toArray(new File[fileList.size()]);
+//        File[] lista = new File[fileList.size()];
+//        int i = 0;
+//        for (String fname : fileList) {
+//            lista[i]=new File(fname);
+//            log.log(Level.INFO, "FAJL:{0}", fname);
+//        }
+//        return lista;
     }
 
     @Override
@@ -56,34 +62,28 @@ public class MLULoggerFileListGenerator implements FileListGenerator {
     public void setPath(String path) {
         this.path = path;
     }
-    
 
-    public List<String> fileList(String directory) {
+    public List<File> fileList(String directory) {
         sdf.setTimeZone(timeZone);
-        String pS = "(" + elementi[0]  + "_" + elementi[1] + ")" + "_" + elementi[2] + "_" + elementi[3] + "_" +  elementi[4] + "." +elementi[5];
+        String pS = "(" + elementi[0] + "_" + elementi[1] + ")";
+        pS += "_" + elementi[2] + "_" + elementi[3];
+        pS += "_" + elementi[4];
+        pS += "." + elementi[5];
         Pattern pattern = Pattern.compile(pS);
-        
-        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:" +  pS);
-        List<String> fileNames = new ArrayList<>();
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(directory),"*." + elementi[5])) {
-            for (Path path : directoryStream) {
-                Path fileName = path.getFileName();
-            
-                if ( matcher.matches(fileName)){
-                    String fn = fileName.toString();
-                    Matcher m = pattern.matcher(fn);
-                    if ( m.matches()) {
-                        String vrijemeStr = m.group(1);
-                        Date vrijeme = sdf.parse(vrijemeStr);
-                        if ( vrijeme.after(pocetak)) {
-                            fileNames.add(path.toString());
-                        }
-
-                    }
+        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:" + pS);
+        List<File> fileNames = new ArrayList<>();
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(directory))) { // , pppS)) {
+            for (Path filePath : directoryStream) {
+                String fn = filePath.getFileName().toString();
+                Matcher m = pattern.matcher(fn);
+                if (m.matches() && sdf.parse(m.group(1)).after(pocetak)) {
+                    fileNames.add(filePath.toFile());
                 }
             }
-        } catch (IOException ex) {} catch (ParseException ex) {
-            Logger.getLogger(MLULoggerFileListGenerator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            log.log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, null, ex);
         }
         return fileNames;
     }

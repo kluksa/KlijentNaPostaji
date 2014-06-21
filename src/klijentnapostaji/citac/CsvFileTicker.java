@@ -4,10 +4,6 @@
  */
 package klijentnapostaji.citac;
 
-import klijentnapostaji.webservice.PrihvatServisLocalImpl;
-import klijentnapostaji.citac.filelistgeneratori.FileListGenerator;
-import klijentnapostaji.citac.exceptions.ParserException;
-import klijentnapostaji.citac.exceptions.PrihvatWSException;
 import com.csvreader.CsvReader;
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +15,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.ws.WebServiceException;
+import klijentnapostaji.citac.exceptions.ParserException;
+import klijentnapostaji.citac.exceptions.PrihvatWSException;
+import klijentnapostaji.citac.filelistgeneratori.FileListGenerator;
 import klijentnapostaji.webservice.CsvOmotnica;
+import klijentnapostaji.webservice.PrihvatServisLocalImpl;
 
 /**
  *
@@ -42,6 +43,7 @@ public class CsvFileTicker implements Runnable {
     private List<Long> vremena;
     private int brojStupaca;
     private Date trenutnoVrijeme;
+    private String schedulerStr;
 
     public CsvFileTicker() {
     }
@@ -80,26 +82,28 @@ public class CsvFileTicker implements Runnable {
         final Date start = new Date();
         String str = "Ticker pokrenut";
         log.info(str);
-        Date zadnji = servis.getVrijemeZadnjeg(csvOBuilder.getIzvor(), csvOBuilder.getPostaja(), csvOBuilder.getDatoteka());
-        for (File datoteka : fileListGen.getFileList(zadnji)) {
-            try {
-                procitaj(datoteka, zadnji);
-                CsvOmotnica create = csvOBuilder.create(headeri, linije, vremena);
-                servis.prebaciOmotnicu(create);
-            } catch (IOException ex) {
-                log.log(Level.SEVERE, null, ex);
-            } catch (ParserException ex) {
-                log.log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                log.log(Level.SEVERE, null, ex);
-            } catch (PrihvatWSException ex) {
-                log.log(Level.SEVERE, null, ex);
-            }
-        }
+        try {
+            Date zadnji = servis.getVrijemeZadnjeg(csvOBuilder.getIzvor(), csvOBuilder.getPostaja(), csvOBuilder.getDatoteka());
 
-        final Date end = new Date();
-        str = "Ticker zavrsio za " + (end.getTime() - start.getTime()) + "ms";
-        log.info(str);
+            log.log(Level.INFO, "Zadnji podatak u: {0}", zadnji);
+            for (File datoteka : fileListGen.getFileList(zadnji)) {
+                try {
+                    procitaj(datoteka, zadnji);
+                    CsvOmotnica create = csvOBuilder.create(headeri, linije, vremena);
+                    servis.prebaciOmotnicu(create);
+                } catch (IOException | ParserException | ParseException | PrihvatWSException | WebServiceException ex) {
+                    log.log(Level.SEVERE, null, ex);
+                }
+            }
+
+            final Date end = new Date();
+            str = "Ticker zavrsio za " + (end.getTime() - start.getTime()) + "ms";
+            log.info(str);
+        } catch (WebServiceException  ex) {
+            log.log(Level.SEVERE, null, ex);
+        } catch (Exception  ex) {
+            log.log(Level.SEVERE, null, ex);
+        }
     }
 
     private void procitaj(File datoteka, Date zadnji) throws ParserException, IOException, ParseException {
@@ -146,4 +150,11 @@ public class CsvFileTicker implements Runnable {
         return dateFormat.parse(vrijemeStr);
     }
 
+    public String getSchedulerString() {
+        return schedulerStr;
+    }
+
+    public void setSchedulerStr(String schedulerStr) {
+        this.schedulerStr = schedulerStr;
+    }
 }

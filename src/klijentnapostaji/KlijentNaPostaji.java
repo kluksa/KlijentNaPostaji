@@ -5,6 +5,7 @@
  */
 package klijentnapostaji;
 
+import it.sauronsoftware.cron4j.Scheduler;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,10 +16,6 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.Date;
-import java.util.Properties;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import klijentnapostaji.citac.CsvFileTicker;
@@ -49,10 +46,10 @@ public class KlijentNaPostaji implements WrapperListener {
         }
     }
 
-    private final ScheduledExecutorService scheduler;
+    private final Scheduler scheduler;
 
     public KlijentNaPostaji() {
-        scheduler = Executors.newScheduledThreadPool(1);
+          scheduler = new Scheduler();
 //        System.setProperty("javax.net.ssl.trustStore", "truststore");
 //        System.setProperty("javax.net.ssl.trustStorePassword", "pasvord@klijent");
 //        System.setProperty("javax.net.ssl.keyStore", "keystore");
@@ -65,21 +62,19 @@ public class KlijentNaPostaji implements WrapperListener {
      * @throws java.io.IOExceptionnd line arguments
      */
     public static void main(String[] args) throws IOException, Exception {
-//        WrapperManager.start(new KlijentNaPostaji(), args);
 
         if (args.length == 1 && args[0].equals("--install")) {
             instaliraj();
         } if (args.length == 1 && args[0].equals("--test")) {
             new KlijentNaPostaji().test();
         } else {
-            new KlijentNaPostaji().start(args);
+            WrapperManager.start(new KlijentNaPostaji(), args);
         }
-
     }
 
     @Override
     public int stop(int exitCode) {
-        scheduler.shutdown();
+        scheduler.stop();
         log.info("Zavrsetak programa");
         return exitCode;
     }
@@ -88,20 +83,25 @@ public class KlijentNaPostaji implements WrapperListener {
     public Integer start(String[] strings) {
         log.info("Pokretanje programa");
         try {
+            
             URL resource = this.getClass().getResource("config.xml");
             Konfiguracija konfig2 = new Konfiguracija("config.xml");
+            log.info("Procitao konfiguraciju");
 
             PrihvatServisLocalImpl servis = new PrihvatServisLocalImpl();
             konfig2.config(servis);
+            log.info("Konfigurirao servis");
             
             
 
             Collection<CsvFileTicker> tikeri = konfig2.getFileTickeri();
             for (CsvFileTicker f : tikeri) {
                 f.setServis(servis);
-                f.run();
+                scheduler.schedule(f.getSchedulerString(), f);
             }
-
+            log.info("Konfigurirao tickere");
+            scheduler.start();
+        log.info("Pokretanje programa7");
         } catch (ConfigurationException ex) {
             log.log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -112,8 +112,8 @@ public class KlijentNaPostaji implements WrapperListener {
             log.log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
             log.log(Level.SEVERE, null, ex);
-        }
-        return 0;
+        } 
+        return null;
     }
     
     private void test() {
@@ -138,11 +138,11 @@ public class KlijentNaPostaji implements WrapperListener {
 //            Date vrijemeZadnjeg = servis.getVrijemeZadnjeg(null, null, null);
 //            System.out.println(vrijemeZadnjeg);
         } catch (ConfigurationException ex) {
-            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         } catch (PrihvatWSException ex) {
-            Logger.getLogger(KlijentNaPostaji.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         }
     }
 
